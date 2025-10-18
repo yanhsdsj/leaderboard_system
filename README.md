@@ -41,6 +41,59 @@ leaderboard_system/
     └── test_comprehensive.py # 综合测试脚本
 ```
 
+## 如何运行
+
+### 环境要求
+
+- Python 3.10.18
+- Node.js 20.11.0
+
+### 后端启动
+
+```bash
+# 进入后端目录
+cd backend
+
+# 安装依赖
+pip install -r requirements.txt
+
+# 方式1：使用start.bat
+start.bat
+
+# 方式2：直接运行
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+后端服务运行在 http://localhost:8000
+
+API文档: http://localhost:8000/docs
+
+### 前端启动
+
+```bash
+# 进入前端目录
+cd frontend
+
+# 安装依赖
+npm install
+
+# 方式1：使用start.bat
+start.bat
+
+# 方式2：直接运行
+npm run dev
+```
+
+前端应用运行在 http://localhost:5173
+
+### 测试
+
+```bash
+# 运行综合测试脚本
+cd example
+python test_comprehensive.py
+```
+
 ## 主要功能
 
 ### 后端API
@@ -132,59 +185,6 @@ leaderboard_system/
 - `LeaderboardTable.jsx` - 排行榜表格，支持点击查看学生提交历史
 - `SubmissionDetails.jsx` - 提交详情弹窗，显示学生所有提交记录
 - `api.js` - 封装所有API调用（提交、查询排行榜、查询提交历史）
-
-## 如何运行
-
-### 环境要求
-
-- Python 3.10.18
-- Node.js 20.11.0
-
-### 后端启动
-
-```bash
-# 进入后端目录
-cd backend
-
-# 安装依赖
-pip install -r requirements.txt
-
-# 方式1：使用start.bat
-start.bat
-
-# 方式2：直接运行
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-后端服务运行在 http://localhost:8000
-
-API文档: http://localhost:8000/docs
-
-### 前端启动
-
-```bash
-# 进入前端目录
-cd frontend
-
-# 安装依赖
-npm install
-
-# 方式1：使用start.bat
-start.bat
-
-# 方式2：直接运行
-npm run dev
-```
-
-前端应用运行在 http://localhost:5173
-
-### 测试
-
-```bash
-# 运行综合测试脚本
-cd example
-python test_comprehensive.py
-```
 
 ## 评分规则
 

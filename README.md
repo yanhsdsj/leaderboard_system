@@ -84,7 +84,7 @@ start.bat
 npm run dev
 ```
 
-前端应用运行在 http://localhost:5173
+前端应用运行在 http://localhost:3000
 
 ### 测试
 
@@ -92,6 +92,12 @@ npm run dev
 # 运行综合测试脚本
 cd example
 python test_comprehensive.py
+```
+
+```bash
+# 运行error测试脚本
+cd example
+python test_error_handling.py
 ```
 
 ## 主要功能

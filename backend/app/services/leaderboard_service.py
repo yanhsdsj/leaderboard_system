@@ -37,7 +37,7 @@ def calculate_score(metrics: Dict, weights: Dict = None) -> float:
     #     weights.get("Prediction_Time", 0.25) * (1 / (1 + metrics["Prediction_Time"]))
     # )
     score = metrics["RMSE"]
-    return round(score, 4)
+    return round(score, 6)
 
 
 

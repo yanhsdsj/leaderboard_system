@@ -89,14 +89,14 @@ def is_deadline_passed(assignment_id: str) -> bool:
 
 def get_submission_count(student_id: str, assignment_id: str) -> int:
     """
-    获取学生在指定作业的提交次数
+    获取学生在指定作业的总提交次数
     
     Args:
         student_id: 学生ID
         assignment_id: 作业ID
         
     Returns:
-        提交次数
+        总提交次数
     """
     ensure_database_exists()
     
@@ -108,6 +108,45 @@ def get_submission_count(student_id: str, assignment_id: str) -> int:
         if s['student_info']['student_id'] == student_id
         and s['assignment_id'] == assignment_id
     )
+    
+    return count
+
+
+def ww(student_id: str, assignment_id: str, date: Optional[str] = None) -> int:
+    """
+    获取学生在指定作业的当日提交次数
+    
+    Args:
+        student_id: 学生ID
+        assignment_id: 作业ID
+        date: 日期字符串（YYYY-MM-DD格式），默认为今天（UTC）
+        
+    Returns:
+        当日提交次数
+    """
+    ensure_database_exists()
+    
+    with open(SUBMISSIONS_FILE, 'r', encoding='utf-8') as f:
+        submissions = json.load(f)
+    
+    # 确定要检查的日期
+    if date is None:
+        target_date = datetime.utcnow().date()
+    else:
+        target_date = datetime.fromisoformat(date).date()
+    
+    count = 0
+    for s in submissions:
+        if (s['student_info']['student_id'] == student_id and 
+            s['assignment_id'] == assignment_id):
+            # 解析提交时间戳
+            timestamp_str = s['submission_data']['timestamp']
+            submission_datetime = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00'))
+            submission_date = submission_datetime.date()
+            
+            # 检查是否在同一天
+            if submission_date == target_date:
+                count += 1
     
     return count
 

@@ -1,0 +1,21 @@
+[Unit]
+Description=Leaderboard System Backend API
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/path/to/leaderboard_system/backend
+Environment="PATH=/path/to/venv/bin"
+ExecStart=/path/to/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000
+Restart=always
+RestartSec=10
+
+# 日志
+StandardOutput=append:/var/log/leaderboard/backend.log
+StandardError=append:/var/log/leaderboard/backend-error.log
+
+[Install]
+WantedBy=multi-user.target
+

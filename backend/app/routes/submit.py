@@ -9,6 +9,7 @@ from ..models.submission import (
 from ..services.storage_service import (
     is_deadline_passed,
     get_submission_count,
+    get_daily_submission_count,
     save_submission,
     get_assignment_config
 )
@@ -38,19 +39,20 @@ async def submit_assignment(submission: SubmissionRequest):
             detail="提交超时：当前时间已超过作业截止时间"
         )
     
-    # 步骤2: 校验提交次数限制
+    # 步骤2: 校验每日提交次数限制
     assignment_config = get_assignment_config(submission.assignment_id)
     if assignment_config:
-        max_submissions = assignment_config.get("max_submissions", 20)
-        current_count = get_submission_count(
+        max_submissions = assignment_config.get("max_submissions", 100)
+        # 获取今日提交次数
+        current_daily_count = get_daily_submission_count(
             submission.student_info.student_id,
             submission.assignment_id
         )
         
-        if current_count >= max_submissions:
+        if current_daily_count >= max_submissions:
             raise HTTPException(
                 status_code=400,
-                detail=f"已达到最大提交次数限制（{max_submissions}次）"
+                detail=f"已达到今日最大提交次数限制（{max_submissions}次/天）"
             )
     
     # 步骤3: 校验MD5

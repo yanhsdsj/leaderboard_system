@@ -72,7 +72,7 @@ def test_1_correct_submission():
             "nickname": "正确提交者"
         },
         "assignment_id": "01",
-        "metrics": {
+            "metrics": {
             "MAE": 0.1234,
             "MSE": 0.5678,
             "RMSE": 0.7536,

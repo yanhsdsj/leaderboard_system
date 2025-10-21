@@ -14,6 +14,7 @@ from ..services.storage_service import (
     get_assignment_config
 )
 from ..services.leaderboard_service import update_student_leaderboard
+from ..services.backup_service import check_and_archive_deadline
 
 router = APIRouter(prefix="/api", tags=["submission"])
 
@@ -32,15 +33,24 @@ async def submit_assignment(submission: SubmissionRequest):
     6. 返回提交状态信息
     """
     
+    # 步骤0: 获取作业配置
+    assignment_config = get_assignment_config(submission.assignment_id)
+    
     # 步骤1: 检查截止时间
     if is_deadline_passed(submission.assignment_id):
+        # 检查是否需要归档
+        if assignment_config and "deadline" in assignment_config:
+            check_and_archive_deadline(
+                submission.assignment_id,
+                assignment_config["deadline"]
+            )
+        
         raise HTTPException(
             status_code=400,
             detail="提交超时：当前时间已超过作业截止时间"
         )
     
     # 步骤2: 校验每日提交次数限制
-    assignment_config = get_assignment_config(submission.assignment_id)
     if assignment_config:
         max_submissions = assignment_config.get("max_submissions", 100)
         # 获取今日提交次数

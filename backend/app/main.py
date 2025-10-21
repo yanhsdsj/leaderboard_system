@@ -3,6 +3,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from .routes import submit, leaderboard, health
 from .services.storage_service import ensure_database_exists
+from .services.backup_service import (
+    ensure_backup_dirs, 
+    backup_to_checkpoint,
+    periodic_backup_task
+)
+import asyncio
 
 # 创建FastAPI应用
 app = FastAPI(
@@ -48,6 +54,20 @@ async def startup_event():
     # 确保数据库文件存在
     ensure_database_exists()
     print("✓ 数据库初始化完成")
+    
+    # 确保备份目录存在
+    ensure_backup_dirs()
+    print("✓ 备份目录初始化完成")
+    
+    # 启动时立即执行一次备份
+    print("\n执行启动备份...")
+    backup_to_checkpoint()
+    print("✓ 启动备份完成\n")
+    
+    # 启动定期备份任务（每12小时）
+    asyncio.create_task(periodic_backup_task())
+    print("✓ 定期备份任务已启动（每12小时执行一次）")
+    
     print("✓ 服务启动成功")
 
 

@@ -112,7 +112,7 @@ def get_submission_count(student_id: str, assignment_id: str) -> int:
     return count
 
 
-def ww(student_id: str, assignment_id: str, date: Optional[str] = None) -> int:
+def get_daily_submission_count(student_id: str, assignment_id: str, date: Optional[str] = None) -> int:
     """
     获取学生在指定作业的当日提交次数
     

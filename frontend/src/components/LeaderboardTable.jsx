@@ -215,7 +215,7 @@ const LeaderboardTable = ({ onStudentClick }) => {
               <tr>
                 <th>排名</th>
                 <th>学号</th>
-                <th>姓名</th>
+                <th>昵称</th>
                 <th>RMSE</th>
                 <th>推理时间</th>
                 <th>提交时间</th>
@@ -232,7 +232,9 @@ const LeaderboardTable = ({ onStudentClick }) => {
                   >
                     {entry.student_info.student_id}
                   </td>
-                  <td className="name-cell">{entry.student_info.name}</td>
+                  <td className="name-cell">
+                    {entry.student_info.nickname || entry.student_info.name || '-'}
+                  </td>
                   <td className="score-cell">{entry.score.toFixed(6)}</td>
                   <td className="prediction-time-cell">{entry.metrics.Prediction_Time.toFixed(2)}s</td>
                   <td className="time-cell">{formatTimestamp(entry.timestamp)}</td>

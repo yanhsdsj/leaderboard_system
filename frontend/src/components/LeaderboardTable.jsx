@@ -76,12 +76,24 @@ const LeaderboardTable = ({ onStudentClick }) => {
   };
 
   // 根据排序顺序处理数据
+  // 排序优先级：分数（RMSE）、预测时间、提交时间
   const sortedData = [...leaderboardData].sort((a, b) => {
-    if (sortOrder === 'asc') {
-      return a.rank - b.rank;
-    } else {
-      return b.rank - a.rank;
+    // 首先按分数（RMSE）排序 - 越小越好
+    if (a.score !== b.score) {
+      return sortOrder === 'asc' ? a.score - b.score : b.score - a.score;
     }
+    
+    // 分数相同时，按预测时间排序 - 越小越好
+    if (a.metrics.Prediction_Time !== b.metrics.Prediction_Time) {
+      return sortOrder === 'asc' 
+        ? a.metrics.Prediction_Time - b.metrics.Prediction_Time 
+        : b.metrics.Prediction_Time - a.metrics.Prediction_Time;
+    }
+    
+    // 预测时间也相同时，按提交时间排序 - 越早越好
+    const timeA = new Date(a.timestamp).getTime();
+    const timeB = new Date(b.timestamp).getTime();
+    return sortOrder === 'asc' ? timeA - timeB : timeB - timeA;
   });
 
   // 格式化时间戳
@@ -121,7 +133,7 @@ const LeaderboardTable = ({ onStudentClick }) => {
   return (
     <div className="leaderboard-container">
       <div className="leaderboard-header">
-        <h1 className="leaderboard-title">Leaderboard</h1>
+        <h1 className="leaderboard-title">DaSE ML-2025 Assignment Performance Leaderboard</h1>
         
         <div className="assignment-selector">
           <label htmlFor="assignment-select">作业：</label>
@@ -203,22 +215,26 @@ const LeaderboardTable = ({ onStudentClick }) => {
               <tr>
                 <th>排名</th>
                 <th>学号</th>
-                <th>分数（RMSE）</th>
+                <th>姓名</th>
+                <th>RMSE</th>
+                <th>推理时间</th>
                 <th>提交时间</th>
                 <th>提交次数</th>
               </tr>
             </thead>
             <tbody>
-              {sortedData.map((entry) => (
+              {sortedData.map((entry, index) => (
                 <tr key={entry.student_info.student_id}>
-                  <td className="rank-cell">{entry.rank}</td>
+                  <td className="rank-cell">{sortOrder === 'asc' ? index + 1 : sortedData.length - index}</td>
                   <td 
                     className="student-id-cell"
                     onClick={() => handleStudentClick(entry.student_info.student_id)}
                   >
                     {entry.student_info.student_id}
                   </td>
+                  <td className="name-cell">{entry.student_info.name}</td>
                   <td className="score-cell">{entry.score.toFixed(6)}</td>
+                  <td className="prediction-time-cell">{entry.metrics.Prediction_Time.toFixed(2)}s</td>
                   <td className="time-cell">{formatTimestamp(entry.timestamp)}</td>
                   <td className="count-cell">{entry.submission_count}</td>
                 </tr>

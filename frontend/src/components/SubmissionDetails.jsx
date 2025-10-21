@@ -173,7 +173,7 @@ const SubmissionDetails = ({ studentId, assignmentId, onClose }) => {
                 </div>
 
                 <div className="metric-item">
-                  <span className="metric-label">预测时间</span>
+                  <span className="metric-label">推理时间</span>
                   <span className="metric-value">
                     {submission.submission_data.metrics.Prediction_Time.toFixed(3)}s
                   </span>

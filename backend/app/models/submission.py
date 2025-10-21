@@ -9,35 +9,29 @@ class Metrics(BaseModel):
     MAE: float = Field(..., description="平均绝对误差")
     MSE: float = Field(..., description="均方误差")
     RMSE: float = Field(..., description="均方根误差")
-    Prediction_Time: float = Field(..., description="预测时间")
-
-
-class SubmissionData(BaseModel):
-    """提交数据模型（用户提交时）"""
-    metrics: Metrics
-
-
-class CompleteSubmissionData(BaseModel):
-    """完整提交数据模型（后端补充）"""
-    metrics: Metrics
-    timestamp: str = Field(..., description="ISO格式时间戳")
-    submission_count: int = Field(..., description="提交次数")
+    Prediction_Time: float = Field(..., description="推理时间")
 
 
 class SubmissionRequest(BaseModel):
     """学生提交请求模型"""
     student_info: StudentInfo
     assignment_id: str = Field(..., description="作业编号")
-    submission_data: SubmissionData
-    signature: Optional[str] = Field(None, description="客户端签名（可选）")
+    metrics: Metrics = Field(..., description="评估指标")
+    checksums: Dict[str, str] = Field(..., description="文件MD5校验和")
+
+
+class CompleteSubmissionData(BaseModel):
+    """完整提交数据模型（后端内部使用）"""
+    metrics: Metrics
+    timestamp: str = Field(..., description="ISO格式时间戳")
+    submission_count: int = Field(..., description="提交次数")
 
 
 class CompleteSubmission(BaseModel):
-    """完整提交记录模型（包含签名）"""
+    """完整提交记录模型"""
     student_info: StudentInfo
     assignment_id: str
     submission_data: CompleteSubmissionData
-    signature: str = Field(..., description="HMAC-SHA256签名")
 
 
 class SubmissionResponse(BaseModel):

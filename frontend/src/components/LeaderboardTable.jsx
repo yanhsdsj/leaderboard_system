@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getLeaderboard, getAllAssignments } from '../api/api';
+import { getLeaderboard, getAllAssignments, getStudentsWithoutSubmission } from '../api/api';
 import './LeaderboardTable.css';
 
 const LeaderboardTable = ({ onStudentClick }) => {
@@ -10,10 +10,14 @@ const LeaderboardTable = ({ onStudentClick }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  // 自动刷新相关状态
-  const [autoRefresh, setAutoRefresh] = useState(false);
-  const [refreshInterval, setRefreshInterval] = useState(5); // 默认5秒
+  // 自动刷新（固定开启，5秒间隔）
+  const refreshInterval = 5; // 固定5秒
   const [lastUpdate, setLastUpdate] = useState(null);
+  
+  // 无提交记录弹窗
+  const [showNoSubmissionModal, setShowNoSubmissionModal] = useState(false);
+  const [noSubmissionData, setNoSubmissionData] = useState(null);
+  const [loadingNoSubmission, setLoadingNoSubmission] = useState(false);
 
   // 初始化：获取所有作业列表（从assignments.json）
   useEffect(() => {
@@ -59,16 +63,16 @@ const LeaderboardTable = ({ onStudentClick }) => {
     fetchLeaderboard();
   }, [selectedAssignment]);
 
-  // 自动刷新定时器
+  // 自动刷新定时器（固定每5秒）
   useEffect(() => {
-    if (!autoRefresh || !selectedAssignment) return;
+    if (!selectedAssignment) return;
 
     const timer = setInterval(() => {
       fetchLeaderboard(false); // 后台刷新，不显示loading
     }, refreshInterval * 1000);
 
     return () => clearInterval(timer);
-  }, [autoRefresh, refreshInterval, selectedAssignment]);
+  }, [selectedAssignment]);
 
   // 切换排序顺序
   const toggleSortOrder = () => {
@@ -76,24 +80,22 @@ const LeaderboardTable = ({ onStudentClick }) => {
   };
 
   // 根据排序顺序处理数据
-  // 排序优先级：分数（RMSE）、预测时间、提交时间
+  // 排序优先级：1. RMSE分数（越小越好）2. 推理时间（越小越好）
   const sortedData = [...leaderboardData].sort((a, b) => {
     // 首先按分数（RMSE）排序 - 越小越好
     if (a.score !== b.score) {
       return sortOrder === 'asc' ? a.score - b.score : b.score - a.score;
     }
     
-    // 分数相同时，按预测时间排序 - 越小越好
+    // 分数相同时，按推理时间排序 - 越小越好
     if (a.metrics.Prediction_Time !== b.metrics.Prediction_Time) {
       return sortOrder === 'asc' 
         ? a.metrics.Prediction_Time - b.metrics.Prediction_Time 
         : b.metrics.Prediction_Time - a.metrics.Prediction_Time;
     }
     
-    // 预测时间也相同时，按提交时间排序 - 越早越好
-    const timeA = new Date(a.timestamp).getTime();
-    const timeB = new Date(b.timestamp).getTime();
-    return sortOrder === 'asc' ? timeA - timeB : timeB - timeA;
+    // 推理时间也相同时，保持原有顺序
+    return 0;
   });
 
   // 格式化时间戳
@@ -120,6 +122,35 @@ const LeaderboardTable = ({ onStudentClick }) => {
 
   const handleStudentClick = (studentId) => {
     onStudentClick(studentId, selectedAssignment);
+  };
+
+  // 获取无提交记录的学生
+  const fetchNoSubmissionStudents = async () => {
+    if (!selectedAssignment) return;
+    
+    setLoadingNoSubmission(true);
+    try {
+      const data = await getStudentsWithoutSubmission(selectedAssignment);
+      setNoSubmissionData(data);
+      setShowNoSubmissionModal(true);
+    } catch (err) {
+      console.error('Failed to fetch students without submission:', err);
+      alert('获取未提交学生列表失败');
+    } finally {
+      setLoadingNoSubmission(false);
+    }
+  };
+
+  // 将学号列表分成四列，每列最多40个
+  const formatStudentColumns = (studentIds) => {
+    const columns = [[], [], [], []];
+    studentIds.forEach((id, index) => {
+      const columnIndex = Math.floor(index / 40);
+      if (columnIndex < 4) {
+        columns[columnIndex].push(id);
+      }
+    });
+    return columns;
   };
 
   if (error) {
@@ -162,46 +193,20 @@ const LeaderboardTable = ({ onStudentClick }) => {
             >
               {sortOrder === 'asc' ? '↑' : '↓'}
             </button>
+            <button 
+              className="no-submission-button"
+              onClick={fetchNoSubmissionStudents}
+              disabled={loadingNoSubmission || !selectedAssignment}
+              title="查看未提交学生名单"
+            >
+              无提交记录
+            </button>
           </div>
           
           <div className="controls-right">
-            <div className="refresh-controls">
-              <label className="refresh-label">
-                <input
-                  type="checkbox"
-                  checked={autoRefresh}
-                  onChange={(e) => setAutoRefresh(e.target.checked)}
-                />
-                <span>自动刷新</span>
-              </label>
-              
-              {autoRefresh && (
-                <select
-                  value={refreshInterval}
-                  onChange={(e) => setRefreshInterval(Number(e.target.value))}
-                  className="interval-select"
-                >
-                  <option value={3}>3秒</option>
-                  <option value={5}>5秒</option>
-                  <option value={10}>10秒</option>
-                  <option value={30}>30秒</option>
-                  <option value={60}>60秒</option>
-                </select>
-              )}
-              
-              <button
-                className="manual-refresh-button"
-                onClick={() => fetchLeaderboard()}
-                disabled={loading}
-                title="手动刷新"
-              >
-                ↻
-              </button>
-            </div>
-            
             {lastUpdate && (
               <div className="last-update">
-                最后更新: {formatLastUpdate()}
+                自动刷新中 · 最后更新: {formatLastUpdate()}
               </div>
             )}
           </div>
@@ -216,9 +221,11 @@ const LeaderboardTable = ({ onStudentClick }) => {
                 <th>排名</th>
                 <th>学号</th>
                 <th>昵称</th>
-                <th>RMSE</th>
-                <th>推理时间</th>
-                <th>提交时间</th>
+                <th><strong>RMSE</strong></th>
+                <th><strong>推理时间</strong></th>
+                <th>MAE</th>
+                <th>MSE</th>
+                <th>最后提交时间</th>
                 <th>提交次数</th>
               </tr>
             </thead>
@@ -235,8 +242,10 @@ const LeaderboardTable = ({ onStudentClick }) => {
                   <td className="name-cell">
                     {entry.student_info.nickname || entry.student_info.name || '-'}
                   </td>
-                  <td className="score-cell">{entry.score.toFixed(6)}</td>
-                  <td className="prediction-time-cell">{entry.metrics.Prediction_Time.toFixed(2)}s</td>
+                  <td className="score-cell bold-cell">{entry.score.toFixed(6)}</td>
+                  <td className="prediction-time-cell bold-cell">{entry.metrics.Prediction_Time.toFixed(6)}s</td>
+                  <td className="mae-cell">{entry.metrics.MAE.toFixed(6)}</td>
+                  <td className="mse-cell">{entry.metrics.MSE.toFixed(6)}</td>
                   <td className="time-cell">{formatTimestamp(entry.timestamp)}</td>
                   <td className="count-cell">{entry.submission_count}</td>
                 </tr>
@@ -249,6 +258,36 @@ const LeaderboardTable = ({ onStudentClick }) => {
           <div className="empty-message">暂无数据</div>
         )}
       </div>
+
+      {/* 无提交记录弹窗 */}
+      {showNoSubmissionModal && noSubmissionData && (
+        <div className="modal-overlay" onClick={() => setShowNoSubmissionModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>以下同学暂无提交记录（{noSubmissionData.count}人）</h3>
+              <button 
+                className="modal-close-button"
+                onClick={() => setShowNoSubmissionModal(false)}
+              >
+                ✕
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="student-columns">
+                {formatStudentColumns(noSubmissionData.student_ids).map((column, colIndex) => (
+                  <div key={colIndex} className="student-column">
+                    {column.map((studentId, index) => (
+                      <div key={index} className="student-id-item">
+                        {studentId}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -131,14 +131,23 @@ def update_student_leaderboard(
                 }
                 leaderboard_updated = True
             elif comparison == 0:
-                # 分数相同，只更新时间戳和提交次数
+                # 分数相同，更新学生信息（支持修改nickname）、时间戳和提交次数
+                leaderboard[existing_index]['student_info'] = student_info
                 leaderboard[existing_index]['timestamp'] = timestamp
                 leaderboard[existing_index]['submission_count'] = submission_count
                 leaderboard_updated = True  # 虽然分数未变，但记录已更新
-            # else: 新分数较差，不更新
+            else:
+                # 新分数较差，只更新学生信息（支持修改nickname）和提交次数，不更新分数和指标
+                leaderboard[existing_index]['student_info'] = student_info
+                leaderboard[existing_index]['submission_count'] = submission_count
+                # 注意：不更新分数、指标和时间戳，保持最佳成绩
     
     # 按分数排序（升序，因为RMSE越小越好）
-    leaderboard.sort(key=lambda x: x['score'], reverse=False)
+    # 排序优先级：1. RMSE分数（越小越好）2. 推理时间（越小越好）
+    leaderboard.sort(key=lambda x: (
+        x['score'],                        # 第一优先级：RMSE（升序）
+        x['metrics']['Prediction_Time']    # 第二优先级：推理时间（升序）
+    ), reverse=False)
     
     # 保存更新后的排行榜
     update_leaderboard(assignment_id, leaderboard)
@@ -173,4 +182,6 @@ def get_ranked_leaderboard(assignment_id: str) -> List[Dict]:
         ranked_leaderboard.append(ranked_entry)
     
     return ranked_leaderboard
+
+
 

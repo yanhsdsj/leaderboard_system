@@ -25,16 +25,49 @@ async def submit_assignment(submission: SubmissionRequest):
     提交作业接口
     
     执行流程：
-    1. 检查截止时间
-    2. 校验提交次数限制
-    3. 校验MD5
-    4. 保存提交记录（补全timestamp、submission_count）
-    5. 更新排行榜（根据提交次数和分数比较）
-    6. 返回提交状态信息
+    1. 验证作业ID和数据字段
+    2. 检查截止时间
+    3. 校验提交次数限制
+    4. 校验MD5
+    5. 保存提交记录（补全timestamp、submission_count）
+    6. 更新排行榜（根据提交次数和分数比较）
+    7. 返回提交状态信息
     """
     
-    # 步骤0: 获取作业配置
+    # 步骤0: 验证作业ID是否存在
     assignment_config = get_assignment_config(submission.assignment_id)
+    if assignment_config is None:
+        raise HTTPException(
+            status_code=400,
+            detail=f"无效的作业ID：{submission.assignment_id}，该作业不存在"
+        )
+    
+    # 步骤0.1: 验证所有必需的指标字段是否存在
+    required_metrics = ["MAE", "MSE", "RMSE", "Prediction_Time"]
+    metrics_dict = submission.metrics.dict()
+    missing_metrics = []
+    invalid_metrics = []
+    
+    for metric in required_metrics:
+        if metric not in metrics_dict or metrics_dict[metric] is None:
+            missing_metrics.append(metric)
+        else:
+            # 验证指标值是否为有效数字（非负数）
+            value = metrics_dict[metric]
+            if not isinstance(value, (int, float)) or value < 0:
+                invalid_metrics.append(f"{metric}={value}")
+    
+    if missing_metrics:
+        raise HTTPException(
+            status_code=400,
+            detail=f"数据格式错误：缺少必需的指标字段 {', '.join(missing_metrics)}"
+        )
+    
+    if invalid_metrics:
+        raise HTTPException(
+            status_code=400,
+            detail=f"数据格式错误：指标值必须为非负数 {', '.join(invalid_metrics)}"
+        )
     
     # 步骤1: 检查截止时间
     if is_deadline_passed(submission.assignment_id):

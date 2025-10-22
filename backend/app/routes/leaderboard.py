@@ -17,6 +17,16 @@ async def get_leaderboard(assignment_id: str):
     Returns:
         排行榜列表（按分数降序排列，包含排名）
     """
+    # 验证作业ID是否存在
+    from ..services.storage_service import get_assignment_config
+    
+    assignment_config = get_assignment_config(assignment_id)
+    if assignment_config is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"无效的作业ID：{assignment_id}，该作业不存在"
+        )
+    
     try:
         leaderboard = get_ranked_leaderboard(assignment_id)
         return leaderboard
@@ -73,6 +83,16 @@ async def get_student_submissions(student_id: str, assignment_id: str):
     Returns:
         该学生的所有提交记录（按时间倒序）
     """
+    # 验证作业ID是否存在
+    from ..services.storage_service import get_assignment_config
+    
+    assignment_config = get_assignment_config(assignment_id)
+    if assignment_config is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"无效的作业ID：{assignment_id}，该作业不存在"
+        )
+    
     try:
         from ..services.storage_service import SUBMISSIONS_FILE, ensure_database_exists
         import json
@@ -125,5 +145,63 @@ async def get_all_assignments() -> Dict:
         raise HTTPException(
             status_code=500,
             detail=f"获取作业配置失败: {str(e)}"
+        )
+
+
+@router.get("/students-without-submission/{assignment_id}")
+async def get_students_without_submission(assignment_id: str):
+    """
+    获取未提交作业的学生列表
+    
+    Args:
+        assignment_id: 作业ID
+        
+    Returns:
+        未提交学生的学号列表
+    """
+    # 验证作业ID是否存在
+    from ..services.storage_service import get_assignment_config
+    from pathlib import Path
+    
+    assignment_config = get_assignment_config(assignment_id)
+    if assignment_config is None:
+        raise HTTPException(
+            status_code=404,
+            detail=f"无效的作业ID：{assignment_id}，该作业不存在"
+        )
+    
+    try:
+        from ..services.storage_service import ensure_database_exists
+        import json
+        
+        ensure_database_exists()
+        
+        # 读取选课名单 list.json
+        list_file = Path(__file__).parent.parent.parent.parent / "list.json"
+        all_student_ids = set()
+        
+        if list_file.exists():
+            with open(list_file, 'r', encoding='utf-8') as f:
+                students = json.load(f)
+                for student in students:
+                    # 将学号转换为字符串
+                    all_student_ids.add(str(student['学号']))
+        
+        # 获取已提交的学生
+        leaderboard = get_ranked_leaderboard(assignment_id)
+        submitted_student_ids = set(entry['student_info']['student_id'] for entry in leaderboard)
+        
+        # 找出未提交的学生
+        not_submitted = sorted(list(all_student_ids - submitted_student_ids))
+        
+        return {
+            "assignment_id": assignment_id,
+            "count": len(not_submitted),
+            "student_ids": not_submitted
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"获取未提交学生列表失败: {str(e)}"
         )
 

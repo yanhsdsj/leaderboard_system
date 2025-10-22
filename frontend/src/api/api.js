@@ -82,5 +82,14 @@ export const getAllAssignments = () => {
   return api.get('/assignments');
 };
 
+/**
+ * 获取未提交作业的学生列表
+ * @param {string} assignmentId - 作业ID
+ * @returns {Promise<Object>} 未提交学生信息 {assignment_id, count, student_ids}
+ */
+export const getStudentsWithoutSubmission = (assignmentId) => {
+  return api.get(`/students-without-submission/${assignmentId}`);
+};
+
 export default api;
 

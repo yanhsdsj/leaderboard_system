@@ -1,0 +1,224 @@
+{
+  "01": [
+    {
+      "student_info": {
+        "student_id": "2024100",
+        "name": "多次提交测试学生",
+        "nickname": "排序测试"
+      },
+      "score": 0.6,
+      "metrics": {
+        "MAE": 1.0,
+        "MSE": 2.0,
+        "RMSE": 0.6,
+        "Prediction_Time": 25.0
+      },
+      "timestamp": "2025-10-21T14:38:19.691384Z",
+      "last_submission_time": "2025-10-21T14:38:19.691384Z",
+      "submission_count": 12,
+      "total_submissions": 12
+    },
+    {
+      "student_info": {
+        "student_id": "2024205",
+        "name": "学生E",
+        "nickname": "测试5"
+      },
+      "score": 0.65,
+      "metrics": {
+        "MAE": 0.1,
+        "MSE": 0.2,
+        "RMSE": 0.65,
+        "Prediction_Time": 15.2
+      },
+      "timestamp": "2025-10-21T14:38:39.800536Z",
+      "last_submission_time": "2025-10-21T14:38:39.800536Z",
+      "submission_count": 1,
+      "total_submissions": 1
+    },
+    {
+      "student_info": {
+        "student_id": "2024204",
+        "name": "学生D",
+        "nickname": "测试4"
+      },
+      "score": 0.72,
+      "metrics": {
+        "MAE": 0.1,
+        "MSE": 0.2,
+        "RMSE": 0.72,
+        "Prediction_Time": 9.5
+      },
+      "timestamp": "2025-10-21T14:38:37.717131Z",
+      "last_submission_time": "2025-10-21T14:38:37.717131Z",
+      "submission_count": 1,
+      "total_submissions": 1
+    },
+    {
+      "student_info": {
+        "student_id": "2024202",
+        "name": "学生B",
+        "nickname": "测试2"
+      },
+      "score": 0.72,
+      "metrics": {
+        "MAE": 0.1,
+        "MSE": 0.2,
+        "RMSE": 0.72,
+        "Prediction_Time": 12.3
+      },
+      "timestamp": "2025-10-21T14:38:29.798333Z",
+      "last_submission_time": "2025-10-21T14:38:29.798333Z",
+      "submission_count": 1,
+      "total_submissions": 1
+    },
+    {
+      "student_info": {
+        "student_id": "2024001",
+        "name": "测试学生A",
+        "nickname": "正确提交者"
+      },
+      "score": 0.7536,
+      "metrics": {
+        "MAE": 0.1234,
+        "MSE": 0.5678,
+        "RMSE": 0.7536,
+        "Prediction_Time": 12.34
+      },
+      "timestamp": "2025-10-21T14:31:21.689073Z",
+      "last_submission_time": "2025-10-21T14:31:21.689073Z",
+      "submission_count": 1,
+      "total_submissions": 1
+    },
+    {
+      "student_info": {
+        "student_id": "2024201",
+        "name": "学生A",
+        "nickname": "测试1"
+      },
+      "score": 0.85,
+      "metrics": {
+        "MAE": 0.1,
+        "MSE": 0.2,
+        "RMSE": 0.85,
+        "Prediction_Time": 10.5
+      },
+      "timestamp": "2025-10-21T14:38:27.716159Z",
+      "last_submission_time": "2025-10-21T14:38:27.716159Z",
+      "submission_count": 1,
+      "total_submissions": 1
+    },
+    {
+      "student_info": {
+        "student_id": "2024203",
+        "name": "学生C",
+        "nickname": "测试3"
+      },
+      "score": 0.9,
+      "metrics": {
+        "MAE": 0.1,
+        "MSE": 0.2,
+        "RMSE": 0.9,
+        "Prediction_Time": 8.7
+      },
+      "timestamp": "2025-10-21T14:38:31.854615Z",
+      "last_submission_time": "2025-10-21T14:38:31.854615Z",
+      "submission_count": 1,
+      "total_submissions": 1
+    }
+  ],
+  "99": [
+    {
+      "student_info": {
+        "student_id": "2024007",
+        "name": "测试学生G",
+        "nickname": "错误作业"
+      },
+      "score": 0.3,
+      "metrics": {
+        "MAE": 0.1,
+        "MSE": 0.2,
+        "RMSE": 0.3,
+        "Prediction_Time": 1.0
+      },
+      "timestamp": "2025-10-21T14:31:36.124242Z",
+      "last_submission_time": "2025-10-21T14:31:36.124242Z",
+      "submission_count": 1,
+      "total_submissions": 1
+    }
+  ],
+  "02": [
+    {
+      "student_info": {
+        "student_id": "2024209",
+        "name": "学生I",
+        "nickname": "测试9"
+      },
+      "score": 0.8,
+      "metrics": {
+        "MAE": 0.1,
+        "MSE": 0.2,
+        "RMSE": 0.8,
+        "Prediction_Time": 22.5
+      },
+      "timestamp": "2025-10-21T14:41:13.524267Z",
+      "last_submission_time": "2025-10-21T14:41:13.524267Z",
+      "submission_count": 1,
+      "total_submissions": 1
+    },
+    {
+      "student_info": {
+        "student_id": "2024207",
+        "name": "学生G",
+        "nickname": "测试7"
+      },
+      "score": 0.95,
+      "metrics": {
+        "MAE": 0.1,
+        "MSE": 0.2,
+        "RMSE": 0.95,
+        "Prediction_Time": 18.5
+      },
+      "timestamp": "2025-10-21T14:41:09.363262Z",
+      "last_submission_time": "2025-10-21T14:41:09.363262Z",
+      "submission_count": 1,
+      "total_submissions": 1
+    },
+    {
+      "student_info": {
+        "student_id": "2024206",
+        "name": "学生F",
+        "nickname": "测试6"
+      },
+      "score": 1.1,
+      "metrics": {
+        "MAE": 0.1,
+        "MSE": 0.2,
+        "RMSE": 1.1,
+        "Prediction_Time": 20.0
+      },
+      "timestamp": "2025-10-21T14:38:41.877132Z",
+      "last_submission_time": "2025-10-21T14:38:41.877132Z",
+      "submission_count": 1,
+      "total_submissions": 1
+    },
+    {
+      "student_info": {
+        "student_id": "2024208",
+        "name": "学生H",
+        "nickname": "测试8"
+      },
+      "score": 1.2,
+      "metrics": {
+        "MAE": 0.1,
+        "MSE": 0.2,
+        "RMSE": 1.2,
+        "Prediction_Time": 16.0
+      },
+      "timestamp": "2025-10-21T14:41:11.452374Z",
+      "last_submission_time": "2025-10-21T14:41:11.452374Z",
+      "submission_count": 1,
+      "total_submissions": 1
+    }
+  ]
+}

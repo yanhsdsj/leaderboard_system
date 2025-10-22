@@ -7,9 +7,8 @@ const SubmissionDetails = ({ studentId, assignmentId, onClose }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-  // 自动刷新相关状态
-  const [autoRefresh, setAutoRefresh] = useState(false);
-  const [refreshInterval, setRefreshInterval] = useState(5);
+  // 自动刷新（固定开启，5秒间隔）
+  const refreshInterval = 5; // 固定5秒
   const [lastUpdate, setLastUpdate] = useState(null);
 
   // 获取提交记录的函数（提取出来以便复用）
@@ -34,16 +33,16 @@ const SubmissionDetails = ({ studentId, assignmentId, onClose }) => {
     fetchSubmissions();
   }, [studentId, assignmentId]);
 
-  // 自动刷新定时器
+  // 自动刷新定时器（固定每5秒）
   useEffect(() => {
-    if (!autoRefresh || !studentId || !assignmentId) return;
+    if (!studentId || !assignmentId) return;
 
     const timer = setInterval(() => {
       fetchSubmissions(false); // 后台刷新，不显示loading
     }, refreshInterval * 1000);
 
     return () => clearInterval(timer);
-  }, [autoRefresh, refreshInterval, studentId, assignmentId]);
+  }, [studentId, assignmentId]);
 
   // 格式化时间戳
   const formatTimestamp = (timestamp) => {
@@ -68,6 +67,26 @@ const SubmissionDetails = ({ studentId, assignmentId, onClose }) => {
     });
   };
 
+  // 找到最佳提交的索引（不改变顺序）
+  const findBestSubmissionIndex = (submissions) => {
+    if (!submissions || submissions.length === 0) return -1;
+    
+    let bestIndex = 0;
+    
+    for (let i = 1; i < submissions.length; i++) {
+      const current = submissions[i].submission_data.metrics;
+      const best = submissions[bestIndex].submission_data.metrics;
+      
+      // 比较 RMSE，如果相同则比较推理时间
+      if (current.RMSE < best.RMSE || 
+          (current.RMSE === best.RMSE && current.Prediction_Time < best.Prediction_Time)) {
+        bestIndex = i;
+      }
+    }
+    
+    return bestIndex;
+  };
+
   if (!studentId) {
     return (
       <div className="submission-details-container">
@@ -90,46 +109,13 @@ const SubmissionDetails = ({ studentId, assignmentId, onClose }) => {
         </button>
       </div>
 
-      <div className="details-controls">
-        <div className="refresh-controls">
-          <label className="refresh-label">
-            <input
-              type="checkbox"
-              checked={autoRefresh}
-              onChange={(e) => setAutoRefresh(e.target.checked)}
-            />
-            <span>自动刷新</span>
-          </label>
-          
-          {autoRefresh && (
-            <select
-              value={refreshInterval}
-              onChange={(e) => setRefreshInterval(Number(e.target.value))}
-              className="interval-select"
-            >
-              <option value={3}>3秒</option>
-              <option value={5}>5秒</option>
-              <option value={10}>10秒</option>
-              <option value={30}>30秒</option>
-            </select>
-          )}
-          
-          <button
-            className="manual-refresh-button"
-            onClick={() => fetchSubmissions()}
-            disabled={loading}
-            title="手动刷新"
-          >
-            ↻
-          </button>
-        </div>
-        
-        {lastUpdate && (
+      {lastUpdate && (
+        <div className="details-controls">
           <div className="last-update">
-            最后更新: {formatLastUpdate()}
+            自动刷新中 · 最后更新: {formatLastUpdate()}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="submissions-list">
         {loading ? (
@@ -139,43 +125,46 @@ const SubmissionDetails = ({ studentId, assignmentId, onClose }) => {
         ) : submissions.length === 0 ? (
           <div className="empty-message">暂无提交记录</div>
         ) : (
-          submissions.map((submission, index) => (
-            <div key={index} className="submission-card">
-              <div className="submission-header">
-                <span className="submission-number">
-                  第 {submission.submission_data.submission_count} 次提交
-                </span>
-                <span className="submission-time">
-                  {formatTimestamp(submission.submission_data.timestamp)}
-                </span>
-              </div>
+          (() => {
+            const bestIndex = findBestSubmissionIndex(submissions);
+            return submissions.map((submission, index) => (
+              <div key={index} className={`submission-card ${index === bestIndex ? 'best-submission' : ''}`}>
+                <div className="submission-header">
+                  <span className="submission-number">
+                    第 {submission.submission_data.submission_count} 次提交
+                    {index === bestIndex && <span className="best-badge">最佳</span>}
+                  </span>
+                  <span className="submission-time">
+                    {formatTimestamp(submission.submission_data.timestamp)}
+                  </span>
+                </div>
 
               <div className="metrics-grid">
                 <div className="metric-item">
                   <span className="metric-label">MAE</span>
                   <span className="metric-value">
-                    {submission.submission_data.metrics.MAE.toFixed(3)}
+                    {submission.submission_data.metrics.MAE.toFixed(6)}
                   </span>
                 </div>
 
                 <div className="metric-item">
                   <span className="metric-label">MSE</span>
                   <span className="metric-value">
-                    {submission.submission_data.metrics.MSE.toFixed(3)}
+                    {submission.submission_data.metrics.MSE.toFixed(6)}
                   </span>
                 </div>
 
                 <div className="metric-item">
                   <span className="metric-label">RMSE</span>
                   <span className="metric-value">
-                    {submission.submission_data.metrics.RMSE.toFixed(3)}
+                    {submission.submission_data.metrics.RMSE.toFixed(6)}
                   </span>
                 </div>
 
                 <div className="metric-item">
                   <span className="metric-label">推理时间</span>
                   <span className="metric-value">
-                    {submission.submission_data.metrics.Prediction_Time.toFixed(3)}s
+                    {submission.submission_data.metrics.Prediction_Time.toFixed(6)}s
                   </span>
                 </div>
               </div>
@@ -185,7 +174,8 @@ const SubmissionDetails = ({ studentId, assignmentId, onClose }) => {
                 </div>
               )}
             </div>
-          ))
+            ));
+          })()
         )}
       </div>
     </div>

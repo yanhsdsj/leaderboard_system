@@ -6,7 +6,8 @@
   margin: 20px;
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 80px);
+  height: calc(100vh - 80px);
+  min-height: calc(100vh - 80px);
   overflow: hidden;
 }
 
@@ -57,7 +58,7 @@
   background: rgba(227, 242, 253, 0.3);
   border-bottom: 1px solid #e3f2fd;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -155,6 +156,49 @@
 .submission-card:hover {
   border-color: #b8d4f1;
   box-shadow: 0 4px 12px rgba(74, 144, 226, 0.1);
+}
+
+/* 最佳提交样式 - 低饱和度绿色 */
+.submission-card.best-submission {
+  background: rgba(220, 245, 220, 0.4);
+  border-color: #b8d4b8;
+}
+
+.submission-card.best-submission:hover {
+  border-color: #9bc49b;
+  box-shadow: 0 4px 16px rgba(144, 195, 144, 0.2);
+}
+
+.submission-card.best-submission .submission-number {
+  color: #5a9b5a;
+}
+
+.submission-card.best-submission .submission-time {
+  color: #7aaa7a;
+}
+
+.submission-card.best-submission .metric-item {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.submission-card.best-submission .metric-label {
+  color: #6b9d6b;
+}
+
+.submission-card.best-submission .metric-value {
+  color: #4d8b4d;
+}
+
+.best-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #7db87d 0%, #9bc89b 100%);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(125, 184, 125, 0.3);
 }
 
 .submission-header {

@@ -1,15 +1,50 @@
-from pydantic import BaseModel, Field
-from typing import Dict, Optional
+from pydantic import BaseModel, Field, ConfigDict
+from typing import Dict, Optional, Any
 from datetime import datetime
 from .student import StudentInfo
 
 
 class Metrics(BaseModel):
-    """评估指标模型"""
-    MAE: float = Field(..., description="平均绝对误差")
-    MSE: float = Field(..., description="均方误差")
-    RMSE: float = Field(..., description="均方根误差")
-    Prediction_Time: float = Field(..., description="推理时间")
+    """
+    评估指标模型 - 灵活支持任意指标字段
+    
+    每个作业可以有不同的metrics字段：
+    - 作业1: MAE, MSE, RMSE, Prediction_Time
+    - 作业2: Accuracy, Prediction_Time
+    """
+    model_config = ConfigDict(extra='allow')
+    
+    def model_dump(self, **kwargs):
+        """覆盖model_dump方法，确保返回所有字段（包括额外字段）"""
+        return super().model_dump(**kwargs)
+    
+    def __getitem__(self, key):
+        """支持字典式访问"""
+        return getattr(self, key)
+    
+    def __setitem__(self, key, value):
+        """支持字典式设置"""
+        setattr(self, key, value)
+    
+    def get(self, key, default=None):
+        """支持字典式get方法"""
+        return getattr(self, key, default)
+    
+    def items(self):
+        """支持字典式items方法"""
+        return self.model_dump().items()
+    
+    def keys(self):
+        """支持字典式keys方法"""
+        return self.model_dump().keys()
+    
+    def values(self):
+        """支持字典式values方法"""
+        return self.model_dump().values()
+    
+    def dict(self, **kwargs):
+        """兼容旧版Pydantic的dict方法"""
+        return self.model_dump(**kwargs)
 
 
 class SubmittedFiles(BaseModel):

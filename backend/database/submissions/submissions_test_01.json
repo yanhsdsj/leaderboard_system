@@ -1,0 +1,22 @@
+[
+  {
+    "student_info": {
+      "student_id": "test_student_001",
+      "name": "测试学生",
+      "nickname": "测试昵称"
+    },
+    "assignment_id": "test_01",
+    "submission_data": {
+      "metrics": {
+        "MAE": 0.5,
+        "MSE": 0.3,
+        "RMSE": 0.4,
+        "Prediction_Time": 0.1
+      },
+      "timestamp": "2025-10-31T02:17:09.195704Z",
+      "submission_count": 1,
+      "checksums": {},
+      "files": {}
+    }
+  }
+]

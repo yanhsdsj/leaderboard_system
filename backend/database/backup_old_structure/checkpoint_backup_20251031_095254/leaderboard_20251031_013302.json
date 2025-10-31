@@ -1,0 +1,52 @@
+{
+  "01": [
+    {
+      "student_info": {
+        "student_id": "10212140414",
+        "name": "盛子骜",
+        "nickname": "最终昵称_第5次修改"
+      },
+      "score": 0.1,
+      "metrics": {
+        "MAE": 0.09,
+        "MSE": 0.01,
+        "RMSE": 0.1,
+        "Prediction_Time": 1.2
+      },
+      "timestamp": "2025-10-22T03:05:25.600053Z",
+      "submission_count": 5
+    },
+    {
+      "student_info": {
+        "student_id": "TEST001",
+        "name": "张三",
+        "nickname": "小张同学"
+      },
+      "score": 0.45,
+      "metrics": {
+        "MAE": 0.4,
+        "MSE": 0.2,
+        "RMSE": 0.45,
+        "Prediction_Time": 0.09
+      },
+      "timestamp": "2025-10-26T15:45:55.307626Z",
+      "submission_count": 2
+    },
+    {
+      "student_info": {
+        "student_id": "TEST002",
+        "name": "王五",
+        "nickname": "小王"
+      },
+      "score": 0.55,
+      "metrics": {
+        "MAE": 0.6,
+        "MSE": 0.3,
+        "RMSE": 0.55,
+        "Prediction_Time": 0.12
+      },
+      "timestamp": "2025-10-26T15:46:01.459123Z",
+      "submission_count": 1
+    }
+  ]
+}

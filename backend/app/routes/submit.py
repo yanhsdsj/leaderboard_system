@@ -176,7 +176,7 @@ async def submit_assignment(submission: SubmissionRequest):
     save_submission(complete_submission.dict())
     
     # 步骤5: 排名与更新逻辑
-    leaderboard_updated, current_rank, score, previous_score = update_student_leaderboard(
+    leaderboard_updated, current_rank, score, previous_score, metric_direction = update_student_leaderboard(
         student_info=submission.student_info.dict(),
         assignment_id=submission.assignment_id,
         metrics=submission.metrics.dict(),
@@ -189,12 +189,21 @@ async def submit_assignment(submission: SubmissionRequest):
         message = "首次提交成功，已加入排行榜"
     else:
         if previous_score is not None and score is not None:
-            if score < previous_score:
-                message = f"提交成功！成绩提升（{previous_score:.6f} → {score:.6f}），排行榜已更新"
-            elif abs(score - previous_score) < 1e-9:
-                message = f"提交成功！成绩与之前相同（{score:.6f}），已更新提交时间"
+            # 根据指标方向判断是提升还是下降
+            if metric_direction == 'max':
+                # 越大越好：新分数 > 旧分数 表示提升
+                is_better = score > previous_score
             else:
-                message = f"提交成功，成绩未提升（{score:.6f} > {previous_score:.6f}），排行榜保持最佳"
+                # 越小越好：新分数 < 旧分数 表示提升
+                is_better = score < previous_score
+            
+            # 检查是否相同
+            if abs(score - previous_score) < 1e-9:
+                message = f"提交成功！指标与之前相同（{score:.6f}），已更新提交时间"
+            elif is_better:
+                message = f"提交成功！指标更优（{previous_score:.6f} → {score:.6f}），排行榜已更新"
+            else:
+                message = f"提交成功，指标未提升（{score:.6f}），排行榜保持最佳成绩（{previous_score:.6f}）"
         elif leaderboard_updated:
             message = "提交成功，排行榜已更新"
         else:

@@ -1,0 +1,163 @@
+[
+  {
+    "student_info": {
+      "student_id": "test_a2_001",
+      "name": "赵六",
+      "nickname": "小赵"
+    },
+    "assignment_id": "02",
+    "submission_data": {
+      "metrics": {
+        "Accuracy": 0.85,
+        "Prediction_Time": 3.0
+      },
+      "timestamp": "2025-10-31T04:58:50.911288Z",
+      "submission_count": 1,
+      "checksums": {
+        "evaluate.py": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+      },
+      "files": {
+        "solution_py": null,
+        "model_file": null
+      }
+    }
+  },
+  {
+    "student_info": {
+      "student_id": "test_a2_001",
+      "name": "赵六",
+      "nickname": "小赵"
+    },
+    "assignment_id": "02",
+    "submission_data": {
+      "metrics": {
+        "Accuracy": 0.88,
+        "Prediction_Time": 3.2
+      },
+      "timestamp": "2025-10-31T04:58:50.929290Z",
+      "submission_count": 2,
+      "checksums": {
+        "evaluate.py": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+      },
+      "files": {
+        "solution_py": null,
+        "model_file": null
+      }
+    }
+  },
+  {
+    "student_info": {
+      "student_id": "test_a2_001",
+      "name": "赵六",
+      "nickname": "小赵"
+    },
+    "assignment_id": "02",
+    "submission_data": {
+      "metrics": {
+        "Accuracy": 0.92,
+        "Prediction_Time": 2.8
+      },
+      "timestamp": "2025-10-31T04:58:50.958423Z",
+      "submission_count": 3,
+      "checksums": {
+        "evaluate.py": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+      },
+      "files": {
+        "solution_py": null,
+        "model_file": null
+      }
+    }
+  },
+  {
+    "student_info": {
+      "student_id": "test_a2_002",
+      "name": "孙七",
+      "nickname": "小孙"
+    },
+    "assignment_id": "02",
+    "submission_data": {
+      "metrics": {
+        "Accuracy": 0.9,
+        "Prediction_Time": 2.5
+      },
+      "timestamp": "2025-10-31T04:58:50.987958Z",
+      "submission_count": 1,
+      "checksums": {
+        "evaluate.py": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+      },
+      "files": {
+        "solution_py": null,
+        "model_file": null
+      }
+    }
+  },
+  {
+    "student_info": {
+      "student_id": "test_a2_002",
+      "name": "孙七",
+      "nickname": "小孙"
+    },
+    "assignment_id": "02",
+    "submission_data": {
+      "metrics": {
+        "Accuracy": 0.93,
+        "Prediction_Time": 2.3
+      },
+      "timestamp": "2025-10-31T04:58:51.016154Z",
+      "submission_count": 2,
+      "checksums": {
+        "evaluate.py": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+      },
+      "files": {
+        "solution_py": null,
+        "model_file": null
+      }
+    }
+  },
+  {
+    "student_info": {
+      "student_id": "test_a2_003",
+      "name": "周八",
+      "nickname": "小周"
+    },
+    "assignment_id": "02",
+    "submission_data": {
+      "metrics": {
+        "Accuracy": 0.95,
+        "Prediction_Time": 2.0
+      },
+      "timestamp": "2025-10-31T04:58:51.044181Z",
+      "submission_count": 1,
+      "checksums": {
+        "evaluate.py": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+      },
+      "files": {
+        "solution_py": null,
+        "model_file": null
+      }
+    }
+  },
+  {
+    "student_info": {
+      "student_id": "test_a2_004",
+      "name": "吴九",
+      "nickname": "小吴"
+    },
+    "assignment_id": "02",
+    "submission_data": {
+      "metrics": {
+        "Accuracy": 0.95,
+        "Prediction_Time": 1.8
+      },
+      "timestamp": "2025-10-31T04:58:51.072709Z",
+      "submission_count": 1,
+      "checksums": {
+        "evaluate.py": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6"
+      },
+      "files": {
+        "solution_py": null,
+        "model_file": null
+      }
+    }
+  }
+]

@@ -48,17 +48,17 @@ async def get_all_leaderboards():
         所有排行榜的字典
     """
     try:
-        from ..services.storage_service import LEADERBOARD_FILE, ensure_database_exists
-        import json
+        from ..services.storage_service import get_all_assignment_ids, get_leaderboard
         
-        ensure_database_exists()
+        # 获取所有作业ID
+        assignment_ids = get_all_assignment_ids()
         
-        with open(LEADERBOARD_FILE, 'r', encoding='utf-8') as f:
-            all_leaderboards = json.load(f)
-        
-        # 为每个排行榜添加排名
+        # 为每个作业获取排行榜
         result = {}
-        for assignment_id, leaderboard in all_leaderboards.items():
+        for assignment_id in assignment_ids:
+            leaderboard = get_leaderboard(assignment_id)
+            
+            # 为每个排行榜添加排名
             ranked_leaderboard = []
             for idx, entry in enumerate(leaderboard):
                 ranked_entry = entry.copy()
@@ -97,19 +97,15 @@ async def get_student_submissions(student_id: str, assignment_id: str):
         )
     
     try:
-        from ..services.storage_service import SUBMISSIONS_FILE, ensure_database_exists
-        import json
+        from ..services.storage_service import get_all_submissions_for_assignment
         
-        ensure_database_exists()
+        # 获取该作业的所有提交记录
+        all_submissions = get_all_submissions_for_assignment(assignment_id)
         
-        with open(SUBMISSIONS_FILE, 'r', encoding='utf-8') as f:
-            all_submissions = json.load(f)
-        
-        # 筛选该学生在该作业的提交记录
+        # 筛选该学生的提交记录
         student_submissions = [
             sub for sub in all_submissions
             if sub['student_info']['student_id'] == student_id
-            and sub['assignment_id'] == assignment_id
         ]
         
         # 按时间倒序排列

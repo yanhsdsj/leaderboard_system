@@ -228,3 +228,28 @@ def get_student_leaderboard_entry(
     
     return None
 
+
+def get_student_registered_info(student_id: str) -> Optional[Dict]:
+    """
+    获取学生首次注册时的完整信息
+    
+    从所有提交记录中查找该学生ID的首次提交，返回当时的student_info
+    这些信息（student_id, name, nickname）将作为该学生ID的唯一绑定信息，不允许修改
+    
+    Args:
+        student_id: 学生ID
+        
+    Returns:
+        学生的注册信息字典（包含student_id, name, nickname），如果学生从未提交则返回None
+    """
+    ensure_database_exists()
+    
+    with open(SUBMISSIONS_FILE, 'r', encoding='utf-8') as f:
+        submissions = json.load(f)
+    
+    # 查找该学生的首次提交
+    for submission in submissions:
+        if submission['student_info']['student_id'] == student_id:
+            return submission['student_info']
+    
+    return None

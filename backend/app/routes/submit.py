@@ -11,7 +11,8 @@ from ..services.storage_service import (
     get_submission_count,
     get_daily_submission_count,
     save_submission,
-    get_assignment_config
+    get_assignment_config,
+    get_student_registered_info
 )
 from ..services.leaderboard_service import update_student_leaderboard
 from ..services.backup_service import check_and_archive_deadline
@@ -42,8 +43,37 @@ async def submit_assignment(submission: SubmissionRequest):
             detail=f"无效的作业ID：{submission.assignment_id}，该作业不存在"
         )
     
-    # 步骤0.1: 验证所有必需的指标字段是否存在
-    required_metrics = ["MAE", "MSE", "RMSE", "Prediction_Time"]
+    # 步骤0.0: 验证学生信息是否与注册信息一致
+    # 检查student_id、name和nickname三者是否都匹配
+    registered_info = get_student_registered_info(submission.student_info.student_id)
+    if registered_info is not None:
+        # 该学生ID已经提交过，需要验证name和nickname是否都一致
+        mismatches = []
+        
+        if registered_info['name'] != submission.student_info.name:
+            mismatches.append(f"姓名（已绑定: '{registered_info['name']}'，当前提交: '{submission.student_info.name}'）")
+        
+        # 比较nickname，需要处理None的情况
+        registered_nickname = registered_info.get('nickname')
+        submitted_nickname = submission.student_info.nickname
+        if registered_nickname != submitted_nickname:
+            mismatches.append(f"昵称（已绑定: '{registered_nickname}'，当前提交: '{submitted_nickname}'）")
+        
+        if mismatches:
+            raise HTTPException(
+                status_code=403,
+                detail=f"身份验证失败：学生ID '{submission.student_info.student_id}' 的信息不匹配。{'; '.join(mismatches)}。学生信息一经绑定不可修改，请使用首次提交时的信息。"
+            )
+    # 如果是首次提交（registered_info is None），则接受并记录该student_info的所有内容
+    
+    # 步骤0.1: 验证所有必需的指标字段是否存在（根据assignment配置动态确定）
+    # 从assignment配置中获取需要的指标
+    required_metrics = list(assignment_config.get("metrics", {}).keys()) if assignment_config else []
+    
+    # 如果配置中没有metrics，则使用默认的指标
+    if not required_metrics:
+        required_metrics = ["MAE", "MSE", "RMSE", "Prediction_Time"]
+    
     metrics_dict = submission.metrics.dict()
     missing_metrics = []
     invalid_metrics = []
@@ -101,17 +131,20 @@ async def submit_assignment(submission: SubmissionRequest):
     # 步骤3: 校验MD5
     if assignment_config and "checksums" in assignment_config:
         expected_checksums = assignment_config["checksums"]
+        failed_files = []
         
-        # 检查evaluate.py的MD5
-        if "evaluate.py" in expected_checksums:
-            expected_md5 = expected_checksums["evaluate.py"]
-            submitted_md5 = submission.checksums.get("evaluate.py", "")
+        # 检查所有需要验证的文件
+        for filename, expected_md5 in expected_checksums.items():
+            submitted_md5 = submission.checksums.get(filename, "")
             
             if submitted_md5 != expected_md5:
-                raise HTTPException(
-                    status_code=400,
-                    detail="MD5校验失败"
-                )
+                failed_files.append(filename)
+        
+        if failed_files:
+            raise HTTPException(
+                status_code=400,
+                detail=f"MD5校验失败：{', '.join(failed_files)} 文件的MD5不匹配"
+            )
     
     # 步骤4: 保存当前提交
     # 获取提交次数（当前次数 + 1）
@@ -123,11 +156,13 @@ async def submit_assignment(submission: SubmissionRequest):
     # 生成时间戳
     timestamp = datetime.utcnow().isoformat() + "Z"
     
-    # 构造完整的提交数据
+    # 构造完整的提交数据（包含文件内容和校验和）
     complete_submission_data = CompleteSubmissionData(
         metrics=submission.metrics,
         timestamp=timestamp,
-        submission_count=submission_count
+        submission_count=submission_count,
+        checksums=submission.checksums,
+        files=submission.files
     )
     
     # 构造完整提交对象
@@ -153,13 +188,15 @@ async def submit_assignment(submission: SubmissionRequest):
     if submission_count == 1:
         message = "首次提交成功，已加入排行榜"
     else:
-        if previous_score is not None:
-            if score > previous_score:
+        if previous_score is not None and score is not None:
+            if score < previous_score:
                 message = f"提交成功！成绩提升（{previous_score:.6f} → {score:.6f}），排行榜已更新"
             elif abs(score - previous_score) < 1e-9:
                 message = f"提交成功！成绩与之前相同（{score:.6f}），已更新提交时间"
             else:
-                message = f"提交成功，成绩未提升（{score:.6f} < {previous_score:.6f}），排行榜不变"
+                message = f"提交成功，成绩未提升（{score:.6f} > {previous_score:.6f}），排行榜保持最佳"
+        elif leaderboard_updated:
+            message = "提交成功，排行榜已更新"
         else:
             message = "提交成功"
     

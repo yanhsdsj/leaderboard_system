@@ -12,12 +12,19 @@ class Metrics(BaseModel):
     Prediction_Time: float = Field(..., description="推理时间")
 
 
+class SubmittedFiles(BaseModel):
+    """提交的文件内容（可选）"""
+    solution_py: Optional[str] = Field(None, description="solution.py文件内容（UTF-8文本）")
+    model_file: Optional[str] = Field(None, description="模型文件内容（Base64编码）")
+
+
 class SubmissionRequest(BaseModel):
     """学生提交请求模型"""
     student_info: StudentInfo
     assignment_id: str = Field(..., description="作业编号")
     metrics: Metrics = Field(..., description="评估指标")
     checksums: Dict[str, str] = Field(..., description="文件MD5校验和")
+    files: Optional[SubmittedFiles] = Field(None, description="提交的文件内容（可选）")
 
 
 class CompleteSubmissionData(BaseModel):
@@ -25,6 +32,8 @@ class CompleteSubmissionData(BaseModel):
     metrics: Metrics
     timestamp: str = Field(..., description="ISO格式时间戳")
     submission_count: int = Field(..., description="提交次数")
+    checksums: Optional[Dict[str, str]] = Field(None, description="文件MD5校验和")
+    files: Optional[SubmittedFiles] = Field(None, description="提交的文件内容")
 
 
 class CompleteSubmission(BaseModel):

@@ -6,16 +6,16 @@ from ..services.leaderboard_service import get_ranked_leaderboard
 router = APIRouter(prefix="/api", tags=["leaderboard"])
 
 
-@router.get("/leaderboard/{assignment_id}", response_model=List[LeaderboardEntry])
+@router.get("/leaderboard/{assignment_id}")
 async def get_leaderboard(assignment_id: str):
     """
-    获取指定作业的排行榜
+    获取指定作业的排行榜及配置信息
     
     Args:
         assignment_id: 作业ID
         
     Returns:
-        排行榜列表（按分数降序排列，包含排名）
+        包含排行榜列表和作业配置的字典
     """
     # 验证作业ID是否存在
     from ..services.storage_service import get_assignment_config
@@ -29,7 +29,10 @@ async def get_leaderboard(assignment_id: str):
     
     try:
         leaderboard = get_ranked_leaderboard(assignment_id)
-        return leaderboard
+        return {
+            "leaderboard": leaderboard,
+            "config": assignment_config
+        }
     except Exception as e:
         raise HTTPException(
             status_code=500,

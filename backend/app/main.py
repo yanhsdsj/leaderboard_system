@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from .routes import submit, leaderboard, health
 from .services.storage_service import ensure_database_exists
 from .services.backup_service import (
@@ -9,6 +10,7 @@ from .services.backup_service import (
     periodic_backup_task
 )
 import asyncio
+from pathlib import Path
 
 # 创建FastAPI应用
 app = FastAPI(
@@ -71,14 +73,34 @@ async def startup_event():
     print("✓ 服务启动成功")
 
 
-@app.get("/")
-async def root():
-    """根路径"""
+@app.get("/api")
+async def api_root():
+    """API根路径"""
     return {
         "message": "欢迎使用Leaderboard Backend API",
         "docs": "/docs",
         "health": "/api/health"
     }
+
+
+# 服务前端静态文件（如果存在）
+frontend_dist = Path(__file__).parent.parent.parent / "frontend" / "dist"
+if frontend_dist.exists():
+    print(f"✓ 找到前端构建文件: {frontend_dist}")
+    app.mount("/", StaticFiles(directory=str(frontend_dist), html=True), name="static")
+else:
+    print(f"⚠ 未找到前端构建文件: {frontend_dist}")
+    print("  提示: 运行 'cd frontend && npm run build' 构建前端")
+    
+    @app.get("/")
+    async def root():
+        """根路径（无前端时）"""
+        return {
+            "message": "欢迎使用Leaderboard Backend API",
+            "docs": "/docs",
+            "health": "/api/health",
+            "note": "前端未构建，请先运行 'cd frontend && npm run build'"
+        }
 
 
 if __name__ == "__main__":

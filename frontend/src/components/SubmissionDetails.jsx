@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getStudentSubmissions } from '../api/api';
 import './SubmissionDetails.css';
 
-const SubmissionDetails = ({ studentId, assignmentId, onClose }) => {
+const SubmissionDetails = ({ studentId, assignmentId, assignmentConfig, onClose }) => {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -140,33 +140,69 @@ const SubmissionDetails = ({ studentId, assignmentId, onClose }) => {
                 </div>
 
               <div className="metrics-grid">
-                <div className="metric-item">
-                  <span className="metric-label">MAE</span>
-                  <span className="metric-value">
-                    {submission.submission_data.metrics.MAE.toFixed(6)}
-                  </span>
-                </div>
+                {/* 动态生成指标显示 - 根据assignment配置的metrics */}
+                {assignmentConfig && assignmentConfig.metrics ? (
+                  Object.entries(assignmentConfig.metrics)
+                    .sort((a, b) => {
+                      // 优先显示优先级大于0的指标，按优先级排序
+                      const [_, priorityA] = a;
+                      const [__, priorityB] = b;
+                      if (priorityA === 0 && priorityB === 0) return 0;
+                      if (priorityA === 0) return 1;
+                      if (priorityB === 0) return -1;
+                      return priorityA - priorityB;
+                    })
+                    .map(([metricName, priority]) => {
+                      const value = submission.submission_data.metrics[metricName];
+                      const isImportant = priority > 0 && priority <= 2;  // 优先级1,2标记为重要
+                      
+                      return (
+                        <div key={metricName} className="metric-item">
+                          <span className={`metric-label ${isImportant ? 'important-metric' : ''}`}>
+                            {isImportant ? <strong>{metricName}</strong> : metricName}
+                          </span>
+                          <span className="metric-value">
+                            {typeof value === 'number' ? (
+                              metricName === 'Prediction_Time' || metricName.includes('Time') ? 
+                                `${value.toFixed(6)}s` : 
+                                value.toFixed(6)
+                            ) : (value || '-')}
+                          </span>
+                        </div>
+                      );
+                    })
+                ) : (
+                  // 默认显示（兼容旧版本）
+                  <>
+                    <div className="metric-item">
+                      <span className="metric-label">MAE</span>
+                      <span className="metric-value">
+                        {submission.submission_data.metrics.MAE ? submission.submission_data.metrics.MAE.toFixed(6) : '-'}
+                      </span>
+                    </div>
 
-                <div className="metric-item">
-                  <span className="metric-label">MSE</span>
-                  <span className="metric-value">
-                    {submission.submission_data.metrics.MSE.toFixed(6)}
-                  </span>
-                </div>
+                    <div className="metric-item">
+                      <span className="metric-label">MSE</span>
+                      <span className="metric-value">
+                        {submission.submission_data.metrics.MSE ? submission.submission_data.metrics.MSE.toFixed(6) : '-'}
+                      </span>
+                    </div>
 
-                <div className="metric-item">
-                  <span className="metric-label">RMSE</span>
-                  <span className="metric-value">
-                    {submission.submission_data.metrics.RMSE.toFixed(6)}
-                  </span>
-                </div>
+                    <div className="metric-item">
+                      <span className="metric-label">RMSE</span>
+                      <span className="metric-value">
+                        {submission.submission_data.metrics.RMSE ? submission.submission_data.metrics.RMSE.toFixed(6) : '-'}
+                      </span>
+                    </div>
 
-                <div className="metric-item">
-                  <span className="metric-label">推理时间</span>
-                  <span className="metric-value">
-                    {submission.submission_data.metrics.Prediction_Time.toFixed(6)}s
-                  </span>
-                </div>
+                    <div className="metric-item">
+                      <span className="metric-label">推理时间</span>
+                      <span className="metric-value">
+                        {submission.submission_data.metrics.Prediction_Time ? submission.submission_data.metrics.Prediction_Time.toFixed(6) + 's' : '-'}
+                      </span>
+                    </div>
+                  </>
+                )}
               </div>
 
               {submission.signature && (

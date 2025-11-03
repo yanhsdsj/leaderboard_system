@@ -1,0 +1,1 @@
+def predict(X): return X * 3

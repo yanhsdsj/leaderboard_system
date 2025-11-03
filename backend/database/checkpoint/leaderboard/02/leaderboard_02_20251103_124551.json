@@ -1,0 +1,58 @@
+[
+  {
+    "student_info": {
+      "student_id": "20230102",
+      "name": "王五",
+      "nickname": "小王"
+    },
+    "score": 0.88,
+    "metrics": {
+      "Accuracy": 0.88,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:40.493621Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "20230104",
+      "name": "孙八",
+      "nickname": "小孙"
+    },
+    "score": 0.88,
+    "metrics": {
+      "Accuracy": 0.88,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:50.864916Z",
+    "submission_count": 2
+  },
+  {
+    "student_info": {
+      "student_id": "20230103",
+      "name": "赵六",
+      "nickname": "小赵"
+    },
+    "score": 0.87,
+    "metrics": {
+      "Accuracy": 0.87,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:44.648856Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "20230101",
+      "name": "张三",
+      "nickname": "小张"
+    },
+    "score": 0.85,
+    "metrics": {
+      "Accuracy": 0.85,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:36.356765Z",
+    "submission_count": 1
+  }
+]

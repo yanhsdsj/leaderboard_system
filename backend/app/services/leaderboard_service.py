@@ -141,7 +141,8 @@ def update_student_leaderboard(
     assignment_id: str,
     metrics: Dict,
     timestamp: str,
-    submission_count: int
+    submission_count: int,
+    main_contributor: str = None
 ) -> Tuple[bool, Optional[int], Optional[float], Optional[float], Optional[str]]:
     """
     更新学生在排行榜中的记录
@@ -152,6 +153,7 @@ def update_student_leaderboard(
         metrics: 评估指标
         timestamp: 提交时间戳
         submission_count: 提交次数
+        main_contributor: 主要贡献者（human 或 ai）
         
     Returns:
         (是否更新了排行榜, 当前排名, 当前主要指标值, 之前的主要指标值, 指标方向)
@@ -192,7 +194,8 @@ def update_student_leaderboard(
             "score": new_score,  # 保存第一优先级的指标值作为 score
             "metrics": metrics,
             "timestamp": timestamp,
-            "submission_count": submission_count
+            "submission_count": submission_count,
+            "main_contributor": main_contributor  # 保存主要贡献者
         }
         leaderboard.append(new_entry)
         leaderboard_updated = True
@@ -212,17 +215,19 @@ def update_student_leaderboard(
                 leaderboard[existing_index]['metrics'] = metrics
                 leaderboard[existing_index]['timestamp'] = timestamp
                 leaderboard[existing_index]['submission_count'] = submission_count
+                leaderboard[existing_index]['main_contributor'] = main_contributor  # 更新主要贡献者
                 leaderboard_updated = True
             elif comparison == 0:
                 # 指标相同，只更新时间戳和提交次数
                 leaderboard[existing_index]['timestamp'] = timestamp
                 leaderboard[existing_index]['submission_count'] = submission_count
+                leaderboard[existing_index]['main_contributor'] = main_contributor  # 更新主要贡献者
                 leaderboard_updated = True  # 虽然指标未变，但记录已更新
             else:
                 # 新指标较差，只更新提交次数和时间戳
                 leaderboard[existing_index]['submission_count'] = submission_count
                 leaderboard[existing_index]['timestamp'] = timestamp  # 更新为最后提交时间
-                # 注意：不更新分数、指标和student_info，保持最佳成绩
+                # 注意：不更新分数、指标、main_contributor和student_info，保持最佳成绩
     
     # 使用优先级配置进行排序
     # 使用 functools.cmp_to_key 将比较函数转换为排序键

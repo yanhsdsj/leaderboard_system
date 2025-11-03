@@ -91,5 +91,13 @@ export const getStudentsWithoutSubmission = (assignmentId) => {
   return api.get(`/students-without-submission/${assignmentId}`);
 };
 
+/**
+ * 获取当前活跃的作业ID（未过截止时间的第一个作业）
+ * @returns {Promise<Object>} {assignment_id: "02", all_active: ["02", "03"]}
+ */
+export const getActiveAssignment = () => {
+  return api.get('/active-assignment');
+};
+
 export default api;
 

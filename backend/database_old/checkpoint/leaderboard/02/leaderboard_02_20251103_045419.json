@@ -1,0 +1,16 @@
+[
+  {
+    "student_info": {
+      "student_id": "DIAGNOSE_002",
+      "name": "诊断测试",
+      "nickname": "Diagnose"
+    },
+    "score": 0.95,
+    "metrics": {
+      "Accuracy": 0.95,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T04:50:14.835039Z",
+    "submission_count": 1
+  }
+]

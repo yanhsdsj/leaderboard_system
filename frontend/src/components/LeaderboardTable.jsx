@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getLeaderboard, getAllAssignments, getStudentsWithoutSubmission } from '../api/api';
+import { getLeaderboard, getAllAssignments, getStudentsWithoutSubmission, getActiveAssignment } from '../api/api';
 import './LeaderboardTable.css';
 
 const LeaderboardTable = ({ onStudentClick }) => {
@@ -20,17 +20,33 @@ const LeaderboardTable = ({ onStudentClick }) => {
   const [noSubmissionData, setNoSubmissionData] = useState(null);
   const [loadingNoSubmission, setLoadingNoSubmission] = useState(false);
 
-  // 初始化：获取所有作业列表（从assignments.json）
+  // 初始化：获取所有作业列表并自动选择当前活跃的作业
   useEffect(() => {
     const fetchAssignments = async () => {
       try {
+        // 获取所有作业列表
         const allAssignments = await getAllAssignments();
-        const assignmentIds = Object.keys(allAssignments);
+        const assignmentIds = Object.keys(allAssignments).sort();
         setAssignments(assignmentIds);
         
-        // 默认选择第一个作业
-        if (assignmentIds.length > 0) {
-          setSelectedAssignment(assignmentIds[0]);
+        // 获取当前活跃的作业（未过截止时间的第一个）
+        try {
+          const activeData = await getActiveAssignment();
+          if (activeData.assignment_id && assignmentIds.includes(activeData.assignment_id)) {
+            // 如果有活跃的作业，选择它
+            setSelectedAssignment(activeData.assignment_id);
+            console.log('自动选择当前活跃的作业:', activeData.assignment_id);
+          } else if (assignmentIds.length > 0) {
+            // 如果没有活跃作业（全部已截止），选择第一个
+            setSelectedAssignment(assignmentIds[0]);
+            console.log('所有作业已截止，选择第一个作业:', assignmentIds[0]);
+          }
+        } catch (err) {
+          console.error('获取活跃作业失败，使用默认选择:', err);
+          // 如果获取活跃作业失败，退回到选择第一个
+          if (assignmentIds.length > 0) {
+            setSelectedAssignment(assignmentIds[0]);
+          }
         }
       } catch (err) {
         console.error('Failed to fetch assignments:', err);
@@ -82,24 +98,11 @@ const LeaderboardTable = ({ onStudentClick }) => {
     setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc');
   };
 
-  // 根据排序顺序处理数据
-  // 排序优先级：1. RMSE分数（越小越好）2. 推理时间（越小越好）
-  const sortedData = [...leaderboardData].sort((a, b) => {
-    // 首先按分数（RMSE）排序 - 越小越好
-    if (a.score !== b.score) {
-      return sortOrder === 'asc' ? a.score - b.score : b.score - a.score;
-    }
-    
-    // 分数相同时，按推理时间排序 - 越小越好
-    if (a.metrics.Prediction_Time !== b.metrics.Prediction_Time) {
-      return sortOrder === 'asc' 
-        ? a.metrics.Prediction_Time - b.metrics.Prediction_Time 
-        : b.metrics.Prediction_Time - a.metrics.Prediction_Time;
-    }
-    
-    // 推理时间也相同时，保持原有顺序
-    return 0;
-  });
+  // 后端已经根据assignment配置正确排序，前端只需要控制升序/降序显示
+  // 注意：后端返回的是"最优在前"的排序，asc表示按原顺序，desc表示反转
+  const sortedData = sortOrder === 'asc' 
+    ? [...leaderboardData]  // 正序：最优在前
+    : [...leaderboardData].reverse();  // 倒序：最差在前
 
   // 格式化时间戳
   const formatTimestamp = (timestamp) => {
@@ -229,23 +232,30 @@ const LeaderboardTable = ({ onStudentClick }) => {
                   // 先显示所有指标，按优先级排序，优先级>0的在前
                   Object.entries(assignmentConfig.metrics)
                     .sort((a, b) => {
-                      const [_, priorityA] = a;
-                      const [__, priorityB] = b;
+                      const [_, configA] = a;
+                      const [__, configB] = b;
+                      // 提取priority值（支持新旧格式）
+                      const priorityA = typeof configA === 'object' ? configA.priority : configA;
+                      const priorityB = typeof configB === 'object' ? configB.priority : configB;
                       // 优先级0的排在最后
                       if (priorityA === 0 && priorityB === 0) return 0;
                       if (priorityA === 0) return 1;
                       if (priorityB === 0) return -1;
                       return priorityA - priorityB;
                     })
-                    .map(([metricName, priority]) => (
-                      <th key={metricName}>
-                        {priority > 0 && priority <= 2 ? (  // 优先级1,2用粗体显示
-                          <strong>{metricName}</strong>
-                        ) : (
-                          metricName
-                        )}
-                      </th>
-                    ))
+                    .map(([metricName, config]) => {
+                      // 提取priority值（支持新旧格式）
+                      const priority = typeof config === 'object' ? config.priority : config;
+                      return (
+                        <th key={metricName}>
+                          {priority > 0 ? (  // 优先级>0用粗体显示
+                            <strong>{metricName}</strong>
+                          ) : (
+                            metricName
+                          )}
+                        </th>
+                      );
+                    })
                 ) : (
                   // 默认的指标列（兼容旧版本）
                   <>
@@ -255,6 +265,7 @@ const LeaderboardTable = ({ onStudentClick }) => {
                     <th>MSE</th>
                   </>
                 )}
+                <th>主要贡献</th>
                 <th>最后提交时间</th>
                 <th>提交次数</th>
               </tr>
@@ -276,19 +287,24 @@ const LeaderboardTable = ({ onStudentClick }) => {
                   {assignmentConfig && assignmentConfig.metrics ? (
                     Object.entries(assignmentConfig.metrics)
                       .sort((a, b) => {
-                        const [_, priorityA] = a;
-                        const [__, priorityB] = b;
+                        const [_, configA] = a;
+                        const [__, configB] = b;
+                        // 提取priority值（支持新旧格式）
+                        const priorityA = typeof configA === 'object' ? configA.priority : configA;
+                        const priorityB = typeof configB === 'object' ? configB.priority : configB;
                         // 优先级0的排在最后
                         if (priorityA === 0 && priorityB === 0) return 0;
                         if (priorityA === 0) return 1;
                         if (priorityB === 0) return -1;
                         return priorityA - priorityB;
                       })
-                      .map(([metricName, priority]) => {
+                      .map(([metricName, config]) => {
+                        // 提取priority值（支持新旧格式）
+                        const priority = typeof config === 'object' ? config.priority : config;
                         const value = entry.metrics && entry.metrics[metricName] !== undefined 
                           ? entry.metrics[metricName] 
                           : 0;
-                        const isBoldMetric = priority > 0 && priority <= 2;  // 优先级1,2用粗体
+                        const isBoldMetric = priority > 0;  // 优先级>0用粗体
                         const cellClass = isBoldMetric ? 'bold-cell' : '';
                         
                         return (
@@ -312,6 +328,13 @@ const LeaderboardTable = ({ onStudentClick }) => {
                       <td className="mse-cell">{entry.metrics.MSE ? entry.metrics.MSE.toFixed(6) : '0.000000'}</td>
                     </>
                   )}
+                  <td className="contributor-cell">
+                    {entry.main_contributor ? (
+                      <span className={`contributor-tag ${entry.main_contributor}`}>
+                        {entry.main_contributor === 'human' ? '👤 human' : '🤖 ai'}
+                      </span>
+                    ) : '-'}
+                  </td>
                   <td className="time-cell">{formatTimestamp(entry.timestamp)}</td>
                   <td className="count-cell">{entry.submission_count}</td>
                 </tr>

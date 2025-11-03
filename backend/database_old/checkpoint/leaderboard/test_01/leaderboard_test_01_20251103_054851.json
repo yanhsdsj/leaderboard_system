@@ -1,0 +1,34 @@
+[
+  {
+    "student_info": {
+      "student_id": "test_student_001",
+      "name": "测试学生1",
+      "nickname": "测试1"
+    },
+    "score": 0.4,
+    "metrics": {
+      "MAE": 0.4,
+      "MSE": 0.2,
+      "RMSE": 0.3,
+      "Prediction_Time": 0.1
+    },
+    "timestamp": "2025-10-31T02:17:09.214687Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "test_student_002",
+      "name": "测试学生2",
+      "nickname": "测试2"
+    },
+    "score": 0.5,
+    "metrics": {
+      "MAE": 0.5,
+      "MSE": 0.3,
+      "RMSE": 0.4,
+      "Prediction_Time": 0.1
+    },
+    "timestamp": "2025-10-31T02:17:09.214687Z",
+    "submission_count": 1
+  }
+]

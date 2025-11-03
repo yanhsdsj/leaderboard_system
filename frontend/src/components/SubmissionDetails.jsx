@@ -67,19 +67,69 @@ const SubmissionDetails = ({ studentId, assignmentId, assignmentConfig, onClose 
     });
   };
 
-  // 找到最佳提交的索引（不改变顺序）
+  // 找到最佳提交的索引（根据assignment配置动态判断）
   const findBestSubmissionIndex = (submissions) => {
     if (!submissions || submissions.length === 0) return -1;
     
-    let bestIndex = 0;
+    // 如果没有配置，返回-1（不标记最佳）
+    if (!assignmentConfig || !assignmentConfig.metrics) return -1;
     
-    for (let i = 1; i < submissions.length; i++) {
-      const current = submissions[i].submission_data.metrics;
-      const best = submissions[bestIndex].submission_data.metrics;
+    // 解析metrics配置，提取优先级和方向
+    const metricsConfig = [];
+    for (const [metricName, config] of Object.entries(assignmentConfig.metrics)) {
+      if (typeof config === 'object') {
+        const priority = config.priority || 0;
+        const direction = config.direction || 'min';
+        if (priority > 0) {
+          metricsConfig.push({ name: metricName, priority, direction });
+        }
+      } else {
+        // 旧格式兼容
+        const priority = config;
+        if (priority > 0) {
+          metricsConfig.push({ name: metricName, priority, direction: 'min' });
+        }
+      }
+    }
+    
+    // 按优先级排序
+    metricsConfig.sort((a, b) => a.priority - b.priority);
+    
+    if (metricsConfig.length === 0) return -1;
+    
+    // 比较两个提交，返回哪个更好
+    const compareSubmissions = (subA, subB) => {
+      const metricsA = subA.submission_data.metrics;
+      const metricsB = subB.submission_data.metrics;
       
-      // 比较 RMSE，如果相同则比较推理时间
-      if (current.RMSE < best.RMSE || 
-          (current.RMSE === best.RMSE && current.Prediction_Time < best.Prediction_Time)) {
+      // 依次比较每个优先级的指标
+      for (const { name, direction } of metricsConfig) {
+        const valueA = metricsA[name];
+        const valueB = metricsB[name];
+        
+        if (valueA === undefined || valueB === undefined) continue;
+        
+        // 处理浮点数精度
+        if (Math.abs(valueA - valueB) < 1e-9) continue;
+        
+        if (direction === 'max') {
+          // 越大越好
+          if (valueA > valueB) return -1;  // A更好
+          if (valueA < valueB) return 1;   // B更好
+        } else {
+          // 越小越好
+          if (valueA < valueB) return -1;  // A更好
+          if (valueA > valueB) return 1;   // B更好
+        }
+      }
+      
+      return 0; // 完全相同
+    };
+    
+    // 找出最佳提交
+    let bestIndex = 0;
+    for (let i = 1; i < submissions.length; i++) {
+      if (compareSubmissions(submissions[i], submissions[bestIndex]) < 0) {
         bestIndex = i;
       }
     }
@@ -133,6 +183,11 @@ const SubmissionDetails = ({ studentId, assignmentId, assignmentConfig, onClose 
                   <span className="submission-number">
                     第 {submission.submission_data.submission_count} 次提交
                     {index === bestIndex && <span className="best-badge">最佳</span>}
+                    {submission.submission_data.main_contributor && (
+                      <span className={`contributor-badge ${submission.submission_data.main_contributor}`}>
+                        {submission.submission_data.main_contributor === 'human' ? '👤 human' : '🤖ai'}
+                      </span>
+                    )}
                   </span>
                   <span className="submission-time">
                     {formatTimestamp(submission.submission_data.timestamp)}
@@ -145,16 +200,21 @@ const SubmissionDetails = ({ studentId, assignmentId, assignmentConfig, onClose 
                   Object.entries(assignmentConfig.metrics)
                     .sort((a, b) => {
                       // 优先显示优先级大于0的指标，按优先级排序
-                      const [_, priorityA] = a;
-                      const [__, priorityB] = b;
+                      const [_, configA] = a;
+                      const [__, configB] = b;
+                      // 提取priority值（支持新旧格式）
+                      const priorityA = typeof configA === 'object' ? configA.priority : configA;
+                      const priorityB = typeof configB === 'object' ? configB.priority : configB;
                       if (priorityA === 0 && priorityB === 0) return 0;
                       if (priorityA === 0) return 1;
                       if (priorityB === 0) return -1;
                       return priorityA - priorityB;
                     })
-                    .map(([metricName, priority]) => {
+                    .map(([metricName, config]) => {
                       const value = submission.submission_data.metrics[metricName];
-                      const isImportant = priority > 0 && priority <= 2;  // 优先级1,2标记为重要
+                      // 提取priority值（支持新旧格式）
+                      const priority = typeof config === 'object' ? config.priority : config;
+                      const isImportant = priority > 0;  // 优先级>0标记为重要
                       
                       return (
                         <div key={metricName} className="metric-item">

@@ -1,0 +1,17 @@
+[
+  {
+    "student_info": {
+      "student_id": "logic_test_001",
+      "name": "测试学生1",
+      "nickname": "波动哥"
+    },
+    "score": 0.95,
+    "metrics": {
+      "Accuracy": 0.95,
+      "Prediction_Time": 0.07
+    },
+    "timestamp": "2025-11-03T14:15:03.390821Z",
+    "submission_count": 4,
+    "main_contributor": "human"
+  }
+]

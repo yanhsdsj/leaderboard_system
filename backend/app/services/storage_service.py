@@ -1,5 +1,6 @@
 import json
 import os
+import base64
 from typing import Dict, List, Optional
 from datetime import datetime
 from pathlib import Path
@@ -14,6 +15,7 @@ LEADERBOARD_DIR = DATABASE_DIR / "leaderboard"
 CHECKPOINT_DIR = DATABASE_DIR / "checkpoint"
 CHECKPOINT_SUBMISSIONS_DIR = CHECKPOINT_DIR / "submissions"
 CHECKPOINT_LEADERBOARD_DIR = CHECKPOINT_DIR / "leaderboard"
+FILES_DIR = DATABASE_DIR / "files"
 
 
 def get_submissions_file(assignment_id: str) -> Path:
@@ -44,13 +46,14 @@ def get_leaderboard_file(assignment_id: str) -> Path:
 
 def ensure_database_exists():
     """确保数据库目录和文件存在"""
-    # 创建主目录结构
-    DATABASE_DIR.mkdir(exist_ok=True)
-    SUBMISSIONS_DIR.mkdir(exist_ok=True)
-    LEADERBOARD_DIR.mkdir(exist_ok=True)
-    CHECKPOINT_DIR.mkdir(exist_ok=True)
-    CHECKPOINT_SUBMISSIONS_DIR.mkdir(exist_ok=True)
-    CHECKPOINT_LEADERBOARD_DIR.mkdir(exist_ok=True)
+    # 创建主目录结构（使用 parents=True 确保父目录也会被创建）
+    DATABASE_DIR.mkdir(parents=True, exist_ok=True)
+    SUBMISSIONS_DIR.mkdir(parents=True, exist_ok=True)
+    LEADERBOARD_DIR.mkdir(parents=True, exist_ok=True)
+    CHECKPOINT_DIR.mkdir(parents=True, exist_ok=True)
+    CHECKPOINT_SUBMISSIONS_DIR.mkdir(parents=True, exist_ok=True)
+    CHECKPOINT_LEADERBOARD_DIR.mkdir(parents=True, exist_ok=True)
+    FILES_DIR.mkdir(parents=True, exist_ok=True)
     
     # 初始化assignments文件（包含作业配置）
     if not ASSIGNMENTS_FILE.exists():
@@ -363,3 +366,105 @@ def get_all_submissions_for_assignment(assignment_id: str) -> List[Dict]:
         submissions = json.load(f)
     
     return submissions
+
+
+def get_files_directory(assignment_id: str, student_id: str) -> Path:
+    """
+    获取学生文件存储目录路径
+    
+    Args:
+        assignment_id: 作业ID
+        student_id: 学生ID
+        
+    Returns:
+        学生文件目录路径
+    """
+    return FILES_DIR / assignment_id / student_id
+
+
+def save_submitted_files(assignment_id: str, student_id: str, files: Dict[str, str]) -> None:
+    """
+    保存学生提交的文件（Base64解码并存储）
+    
+    Args:
+        assignment_id: 作业ID
+        student_id: 学生ID
+        files: 文件字典，格式为 {filename: base64_content}
+    
+    Raises:
+        ValueError: 如果文件内容解码失败
+    """
+    print(f"DEBUG: save_submitted_files 被调用 - assignment_id={assignment_id}, student_id={student_id}, files={list(files.keys())}")
+    
+    # 确保基础目录结构存在
+    ensure_database_exists()
+    print(f"DEBUG: ensure_database_exists 完成")
+    
+    # 确保学生目录存在
+    student_dir = get_files_directory(assignment_id, student_id)
+    print(f"DEBUG: 学生目录路径: {student_dir.absolute()}")
+    student_dir.mkdir(parents=True, exist_ok=True)
+    print(f"DEBUG: 学生目录创建完成，存在: {student_dir.exists()}")
+    
+    # 保存每个文件
+    for filename, base64_content in files.items():
+        if not base64_content:
+            print(f"DEBUG: 跳过空文件: {filename}")
+            continue
+            
+        try:
+            print(f"DEBUG: 开始处理文件: {filename}, base64长度: {len(base64_content)}")
+            
+            # Base64解码
+            file_content = base64.b64decode(base64_content)
+            print(f"DEBUG: Base64解码成功，内容长度: {len(file_content)} bytes")
+            
+            # 写入文件
+            file_path = student_dir / filename
+            print(f"DEBUG: 准备写入文件: {file_path.absolute()}")
+            with open(file_path, 'wb') as f:
+                f.write(file_content)
+            print(f"DEBUG: 文件写入成功: {filename}, 大小: {file_path.stat().st_size} bytes")
+                
+        except Exception as e:
+            print(f"ERROR: 文件 {filename} 处理失败: {str(e)}")
+            raise ValueError(f"文件 {filename} 解码或保存失败: {str(e)}")
+
+
+def validate_required_files(assignment_id: str, submitted_files: Optional[Dict[str, str]]) -> List[str]:
+    """
+    验证是否提交了所有必需的文件
+    
+    Args:
+        assignment_id: 作业ID
+        submitted_files: 提交的文件字典（可能为None）
+        
+    Returns:
+        缺失的文件名列表，如果都齐全则返回空列表
+    """
+    config = get_assignment_config(assignment_id)
+    if not config:
+        return []
+    
+    required_files = config.get("required_files", [])
+    if not required_files:
+        return []
+    
+    # 如果配置了required_files但没有提交任何文件
+    if not submitted_files:
+        return required_files
+    
+    # 检查每个必需文件是否存在且有内容
+    missing_files = []
+    for filename in required_files:
+        # 检查文件是否存在
+        if filename not in submitted_files:
+            missing_files.append(filename)
+            continue
+        
+        # 检查文件内容是否为空（None、空字符串或只有空白字符）
+        file_content = submitted_files[filename]
+        if not file_content or (isinstance(file_content, str) and not file_content.strip()):
+            missing_files.append(filename)
+    
+    return missing_files

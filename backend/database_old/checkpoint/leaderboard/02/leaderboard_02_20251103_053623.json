@@ -1,0 +1,100 @@
+[
+  {
+    "student_info": {
+      "student_id": "SORT_001",
+      "name": "学生A",
+      "nickname": "排序1"
+    },
+    "score": 0.95,
+    "metrics": {
+      "Accuracy": 0.95,
+      "Prediction_Time": 0.1
+    },
+    "timestamp": "2025-11-03T05:22:27.093740Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "TEST_BIND_001",
+      "name": "张三",
+      "nickname": "小张"
+    },
+    "score": 0.93,
+    "metrics": {
+      "Accuracy": 0.93,
+      "Prediction_Time": 0.06
+    },
+    "timestamp": "2025-11-03T05:22:16.729030Z",
+    "submission_count": 2
+  },
+  {
+    "student_info": {
+      "student_id": "SORT_002",
+      "name": "学生B",
+      "nickname": "排序2"
+    },
+    "score": 0.9,
+    "metrics": {
+      "Accuracy": 0.9,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T05:22:29.174770Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "TEST_FILE_001",
+      "name": "王五",
+      "nickname": "文件测试"
+    },
+    "score": 0.9,
+    "metrics": {
+      "Accuracy": 0.9,
+      "Prediction_Time": 0.08
+    },
+    "timestamp": "2025-11-03T05:22:22.913598Z",
+    "submission_count": 3
+  },
+  {
+    "student_info": {
+      "student_id": "SORT_003",
+      "name": "学生C",
+      "nickname": "排序3"
+    },
+    "score": 0.9,
+    "metrics": {
+      "Accuracy": 0.9,
+      "Prediction_Time": 0.1
+    },
+    "timestamp": "2025-11-03T05:22:31.228659Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "TEST_CHINESE_001",
+      "name": "中文测试",
+      "nickname": "测试中文"
+    },
+    "score": 0.88,
+    "metrics": {
+      "Accuracy": 0.88,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T05:22:25.022582Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "SORT_004",
+      "name": "学生D",
+      "nickname": "排序4"
+    },
+    "score": 0.85,
+    "metrics": {
+      "Accuracy": 0.85,
+      "Prediction_Time": 0.02
+    },
+    "timestamp": "2025-11-03T05:22:33.303942Z",
+    "submission_count": 1
+  }
+]

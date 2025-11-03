@@ -1,0 +1,32 @@
+[
+  {
+    "student_info": {
+      "student_id": "test_mc_update_001",
+      "name": "测试更新",
+      "nickname": "更新测试"
+    },
+    "score": 0.92,
+    "metrics": {
+      "Accuracy": 0.92,
+      "Prediction_Time": 0.08
+    },
+    "timestamp": "2025-11-03T14:24:31.320675Z",
+    "submission_count": 2,
+    "main_contributor": "ai"
+  },
+  {
+    "student_info": {
+      "student_id": "test_mc_save_001",
+      "name": "测试保存",
+      "nickname": "保存测试"
+    },
+    "score": 0.85,
+    "metrics": {
+      "Accuracy": 0.85,
+      "Prediction_Time": 0.08
+    },
+    "timestamp": "2025-11-03T14:24:21.214807Z",
+    "submission_count": 1,
+    "main_contributor": "human"
+  }
+]

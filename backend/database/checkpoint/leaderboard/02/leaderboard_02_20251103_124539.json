@@ -1,0 +1,16 @@
+[
+  {
+    "student_info": {
+      "student_id": "20230101",
+      "name": "张三",
+      "nickname": "小张"
+    },
+    "score": 0.85,
+    "metrics": {
+      "Accuracy": 0.85,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:36.356765Z",
+    "submission_count": 1
+  }
+]

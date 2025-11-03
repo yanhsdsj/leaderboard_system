@@ -12,7 +12,9 @@ from ..services.storage_service import (
     get_daily_submission_count,
     save_submission,
     get_assignment_config,
-    get_student_registered_info
+    get_student_registered_info,
+    validate_required_files,
+    save_submitted_files
 )
 from ..services.leaderboard_service import update_student_leaderboard
 from ..services.backup_service import check_and_archive_deadline
@@ -146,6 +148,14 @@ async def submit_assignment(submission: SubmissionRequest):
                 detail=f"MD5校验失败：{', '.join(failed_files)} 文件的MD5不匹配"
             )
     
+    # 步骤3.1: 验证必需文件（如果作业配置了required_files）
+    missing_files = validate_required_files(submission.assignment_id, submission.files)
+    if missing_files:
+        raise HTTPException(
+            status_code=400,
+            detail=f"缺少必需的文件：{', '.join(missing_files)}。请确保提交了所有必需的文件。"
+        )
+    
     # 步骤4: 保存当前提交
     # 获取提交次数（当前次数 + 1）
     submission_count = get_submission_count(
@@ -162,7 +172,8 @@ async def submit_assignment(submission: SubmissionRequest):
         timestamp=timestamp,
         submission_count=submission_count,
         checksums=submission.checksums,
-        files=submission.files
+        files=submission.files,
+        main_contributor=submission.main_contributor
     )
     
     # 构造完整提交对象
@@ -175,14 +186,37 @@ async def submit_assignment(submission: SubmissionRequest):
     # 保存到提交历史
     save_submission(complete_submission.dict())
     
-    # 步骤5: 排名与更新逻辑
+    # 步骤5: 排名与更新逻辑（先判断是否更新排行榜）
     leaderboard_updated, current_rank, score, previous_score, metric_direction = update_student_leaderboard(
         student_info=submission.student_info.dict(),
         assignment_id=submission.assignment_id,
         metrics=submission.metrics.dict(),
         timestamp=timestamp,
-        submission_count=submission_count
+        submission_count=submission_count,
+        main_contributor=submission.main_contributor
     )
+    
+    # 步骤5.1: 只有在排行榜更新时才保存文件到磁盘
+    # 这样可以保证只保存最佳成绩对应的文件
+    if submission.files and leaderboard_updated:
+        try:
+            print(f"DEBUG: 排行榜已更新，保存最佳成绩的文件 - assignment_id={submission.assignment_id}, student_id={submission.student_info.student_id}")
+            print(f"DEBUG: 文件列表: {list(submission.files.keys())}")
+            save_submitted_files(
+                submission.assignment_id,
+                submission.student_info.student_id,
+                submission.files
+            )
+            print(f"DEBUG: 文件保存成功")
+        except Exception as e:
+            # 文件保存失败，记录错误信息但不影响提交
+            import traceback
+            error_detail = f"文件保存失败：{str(e)}"
+            print(f"ERROR: {error_detail}")
+            print(traceback.format_exc())
+            # 注意：这里不抛出异常，因为提交本身已经成功了
+    elif submission.files and not leaderboard_updated:
+        print(f"DEBUG: 排行榜未更新（成绩未提升），跳过文件保存")
     
     # 步骤6: 返回提交状态信息
     if submission_count == 1:

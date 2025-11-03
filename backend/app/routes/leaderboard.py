@@ -147,6 +147,50 @@ async def get_all_assignments() -> Dict:
         )
 
 
+@router.get("/active-assignment")
+async def get_active_assignment():
+    """
+    获取当前活跃的作业ID（未过截止时间的第一个作业）
+    
+    Returns:
+        {"assignment_id": "02"} 或 {"assignment_id": null} 如果所有作业都已截止
+    """
+    try:
+        from ..services.storage_service import get_assignment_config, ASSIGNMENTS_FILE
+        from datetime import datetime
+        import json
+        
+        # 读取所有作业配置
+        with open(ASSIGNMENTS_FILE, 'r', encoding='utf-8') as f:
+            all_assignments = json.load(f)
+        
+        current_time = datetime.utcnow()
+        
+        # 找出所有未截止的作业，并按作业ID排序
+        active_assignments = []
+        for assignment_id, config in all_assignments.items():
+            if 'deadline' in config:
+                # 移除时区信息进行比较
+                deadline_str = config['deadline'].replace('Z', '')
+                deadline = datetime.fromisoformat(deadline_str)
+                if current_time < deadline:
+                    active_assignments.append(assignment_id)
+        
+        # 对作业ID进行排序（数字优先，然后字母）
+        active_assignments.sort()
+        
+        # 返回第一个活跃的作业，如果没有则返回 None
+        return {
+            "assignment_id": active_assignments[0] if active_assignments else None,
+            "all_active": active_assignments
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"获取活跃作业失败: {str(e)}"
+        )
+
+
 @router.get("/students-without-submission/{assignment_id}")
 async def get_students_without_submission(assignment_id: str):
     """

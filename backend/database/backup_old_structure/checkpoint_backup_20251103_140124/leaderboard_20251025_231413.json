@@ -1,0 +1,1044 @@
+{
+  "01": [
+    {
+      "student_info": {
+        "student_id": "51285903010",
+        "name": "杭东升",
+        "nickname": "hds"
+      },
+      "score": 7.2523,
+      "metrics": {
+        "MAE": 5.773538070749009,
+        "MSE": 52.5964949586567,
+        "RMSE": 7.252344100954994,
+        "Prediction_Time": 40.39111590385437
+      },
+      "timestamp": "2025-10-25T12:25:12.575893Z",
+      "submission_count": 9
+    },
+    {
+      "student_info": {
+        "student_id": "52305903004",
+        "name": "骆心仪",
+        "nickname": "carrie"
+      },
+      "score": 7.2908,
+      "metrics": {
+        "MAE": 5.753632624764056,
+        "MSE": 53.1551260019944,
+        "RMSE": 7.290756202342415,
+        "Prediction_Time": 238.9545648097992
+      },
+      "timestamp": "2025-10-25T14:05:34.224148Z",
+      "submission_count": 3
+    },
+    {
+      "student_info": {
+        "student_id": "2020005900",
+        "name": "卡拉米",
+        "nickname": "卡拉米"
+      },
+      "score": 7.4963,
+      "metrics": {
+        "MAE": 6.0328015358857945,
+        "MSE": 56.19384069791924,
+        "RMSE": 7.496255111581998,
+        "Prediction_Time": 1.4518952369689941
+      },
+      "timestamp": "2025-10-25T17:27:02.585571Z",
+      "submission_count": 1
+    },
+    {
+      "student_info": {
+        "student_id": "51285903049",
+        "name": "蔡钦楠",
+        "nickname": "YI"
+      },
+      "score": 7.5427,
+      "metrics": {
+        "MAE": 6.021260126744312,
+        "MSE": 56.89269485838457,
+        "RMSE": 7.542724630952967,
+        "Prediction_Time": 117.43855476379395
+      },
+      "timestamp": "2025-10-25T15:14:16.548523Z",
+      "submission_count": 2
+    },
+    {
+      "student_info": {
+        "student_id": "51285903114",
+        "name": "陆骏凯",
+        "nickname": "666"
+      },
+      "score": 7.5619,
+      "metrics": {
+        "MAE": 6.072183854408239,
+        "MSE": 57.18235398737957,
+        "RMSE": 7.561901479613416,
+        "Prediction_Time": 0.35243940353393555
+      },
+      "timestamp": "2025-10-25T12:09:31.046985Z",
+      "submission_count": 12
+    },
+    {
+      "student_info": {
+        "student_id": "51285903117",
+        "name": "晏康佳",
+        "nickname": "zzz"
+      },
+      "score": 7.5833,
+      "metrics": {
+        "MAE": 6.1243658014817335,
+        "MSE": 57.50663595139633,
+        "RMSE": 7.58331299310508,
+        "Prediction_Time": 57.68052291870117
+      },
+      "timestamp": "2025-10-25T08:57:10.249663Z",
+      "submission_count": 3
+    },
+    {
+      "student_info": {
+        "student_id": "51285903076",
+        "name": "彭一珅",
+        "nickname": "11"
+      },
+      "score": 7.6017,
+      "metrics": {
+        "MAE": 6.148771476276049,
+        "MSE": 57.786091309678646,
+        "RMSE": 7.601716339727407,
+        "Prediction_Time": 24.63656759262085
+      },
+      "timestamp": "2025-10-23T11:30:26.369545Z",
+      "submission_count": 1
+    },
+    {
+      "student_info": {
+        "student_id": "51285903025",
+        "name": "杨牧之",
+        "nickname": "，，，"
+      },
+      "score": 7.6311,
+      "metrics": {
+        "MAE": 6.146799348935457,
+        "MSE": 58.23359658665109,
+        "RMSE": 7.631094062233219,
+        "Prediction_Time": 39.02796530723572
+      },
+      "timestamp": "2025-10-25T10:35:09.431734Z",
+      "submission_count": 12
+    },
+    {
+      "student_info": {
+        "student_id": "51285903109",
+        "name": "陈泽源",
+        "nickname": "114514"
+      },
+      "score": 7.6363,
+      "metrics": {
+        "MAE": 6.159470006498009,
+        "MSE": 58.31318775598465,
+        "RMSE": 7.6363072067580315,
+        "Prediction_Time": 36.726730823516846
+      },
+      "timestamp": "2025-10-25T19:54:13.539902Z",
+      "submission_count": 16
+    },
+    {
+      "student_info": {
+        "student_id": "51285903042",
+        "name": "吴天辰",
+        "nickname": "jiaotangbuding"
+      },
+      "score": 7.6378,
+      "metrics": {
+        "MAE": 6.178237220805551,
+        "MSE": 58.3367127921641,
+        "RMSE": 7.637847392568412,
+        "Prediction_Time": 1.775352954864502
+      },
+      "timestamp": "2025-10-25T08:14:35.823875Z",
+      "submission_count": 7
+    },
+    {
+      "student_info": {
+        "student_id": "123456",
+        "name": "吴天辰",
+        "nickname": "jiaotangbuding"
+      },
+      "score": 7.6378,
+      "metrics": {
+        "MAE": 6.178237220805551,
+        "MSE": 58.3367127921641,
+        "RMSE": 7.637847392568412,
+        "Prediction_Time": 1.975233554840088
+      },
+      "timestamp": "2025-10-25T07:57:34.932428Z",
+      "submission_count": 1
+    },
+    {
+      "student_info": {
+        "student_id": "51285903051",
+        "name": "黄家轶",
+        "nickname": "demonshower"
+      },
+      "score": 7.6605,
+      "metrics": {
+        "MAE": 6.182085169038988,
+        "MSE": 58.68298520927429,
+        "RMSE": 7.6604820481007785,
+        "Prediction_Time": 1.4165518283843994
+      },
+      "timestamp": "2025-10-25T04:33:20.050799Z",
+      "submission_count": 4
+    },
+    {
+      "student_info": {
+        "student_id": "000000",
+        "name": "test",
+        "nickname": "test"
+      },
+      "score": 7.6764,
+      "metrics": {
+        "MAE": 6.231252308721091,
+        "MSE": 58.92712069698493,
+        "RMSE": 7.676400243407383,
+        "Prediction_Time": 0.7962372303009033
+      },
+      "timestamp": "2025-10-25T15:49:35.075792Z",
+      "submission_count": 5
+    },
+    {
+      "student_info": {
+        "student_id": "51285903107",
+        "name": "朱逢园",
+        "nickname": "anonymity"
+      },
+      "score": 7.682,
+      "metrics": {
+        "MAE": 6.238219230199038,
+        "MSE": 59.01382858950801,
+        "RMSE": 7.682045859633227,
+        "Prediction_Time": 1.8646233081817627
+      },
+      "timestamp": "2025-10-25T20:29:09.088219Z",
+      "submission_count": 17
+    },
+    {
+      "student_info": {
+        "student_id": "51285903020",
+        "name": "赖鑫",
+        "nickname": "xiangzi"
+      },
+      "score": 7.6888,
+      "metrics": {
+        "MAE": 6.2107035560798645,
+        "MSE": 59.11780632678674,
+        "RMSE": 7.68881046240488,
+        "Prediction_Time": 9.859869956970215
+      },
+      "timestamp": "2025-10-25T03:34:47.276760Z",
+      "submission_count": 4
+    },
+    {
+      "student_info": {
+        "student_id": "51285903108",
+        "name": "李业",
+        "nickname": "神龙摆尾"
+      },
+      "score": 7.6987,
+      "metrics": {
+        "MAE": 6.269567072897487,
+        "MSE": 59.269780804515804,
+        "RMSE": 7.698686953274292,
+        "Prediction_Time": 0.3922901153564453
+      },
+      "timestamp": "2025-10-25T16:31:58.774582Z",
+      "submission_count": 3
+    },
+    {
+      "student_info": {
+        "student_id": "021021",
+        "name": "6486",
+        "nickname": "9987978"
+      },
+      "score": 7.7031,
+      "metrics": {
+        "MAE": 6.242284617578283,
+        "MSE": 59.33705373245492,
+        "RMSE": 7.703054831198783,
+        "Prediction_Time": 1.0225253105163574
+      },
+      "timestamp": "2025-10-25T19:46:32.808139Z",
+      "submission_count": 1
+    },
+    {
+      "student_info": {
+        "student_id": "51285903110",
+        "name": "赵武锟",
+        "nickname": "ikun"
+      },
+      "score": 7.7031,
+      "metrics": {
+        "MAE": 6.242284617578283,
+        "MSE": 59.33705373245492,
+        "RMSE": 7.703054831198783,
+        "Prediction_Time": 1.1469781398773193
+      },
+      "timestamp": "2025-10-25T19:53:30.623114Z",
+      "submission_count": 6
+    },
+    {
+      "student_info": {
+        "student_id": "25522555",
+        "name": "0001",
+        "nickname": "1001"
+      },
+      "score": 7.7031,
+      "metrics": {
+        "MAE": 6.242284617578283,
+        "MSE": 59.33705373245492,
+        "RMSE": 7.703054831198783,
+        "Prediction_Time": 1.1769218444824219
+      },
+      "timestamp": "2025-10-25T19:27:21.064369Z",
+      "submission_count": 3
+    },
+    {
+      "student_info": {
+        "student_id": "51285903071",
+        "name": "唐小卉",
+        "nickname": "Thea"
+      },
+      "score": 7.7171,
+      "metrics": {
+        "MAE": 6.216281619292194,
+        "MSE": 59.55413261043873,
+        "RMSE": 7.717132408507627,
+        "Prediction_Time": 1.8293812274932861
+      },
+      "timestamp": "2025-10-25T08:38:40.003651Z",
+      "submission_count": 2
+    },
+    {
+      "student_info": {
+        "student_id": "51285903094",
+        "name": "郑云贵",
+        "nickname": "derek6"
+      },
+      "score": 7.7297,
+      "metrics": {
+        "MAE": 6.278770680031802,
+        "MSE": 59.748545385387345,
+        "RMSE": 7.7297183251000385,
+        "Prediction_Time": 104.4657666683197
+      },
+      "timestamp": "2025-10-25T15:06:55.649436Z",
+      "submission_count": 3
+    },
+    {
+      "student_info": {
+        "student_id": "52305903003",
+        "name": "文羽昕",
+        "nickname": "awazing"
+      },
+      "score": 7.7381,
+      "metrics": {
+        "MAE": 6.2859853183532834,
+        "MSE": 59.87775842090529,
+        "RMSE": 7.738072009286634,
+        "Prediction_Time": 0.2196178436279297
+      },
+      "timestamp": "2025-10-24T09:42:31.701543Z",
+      "submission_count": 2
+    },
+    {
+      "student_info": {
+        "student_id": "51285903083",
+        "name": "陈亦楠",
+        "nickname": "404"
+      },
+      "score": 7.7393,
+      "metrics": {
+        "MAE": 6.286972296288415,
+        "MSE": 59.89672227795026,
+        "RMSE": 7.739297272876282,
+        "Prediction_Time": 0.6627130508422852
+      },
+      "timestamp": "2025-10-25T12:29:33.719204Z",
+      "submission_count": 12
+    },
+    {
+      "student_info": {
+        "student_id": "52305903001",
+        "name": "于海洋",
+        "nickname": "yhy"
+      },
+      "score": 7.7402,
+      "metrics": {
+        "MAE": 6.272222137287647,
+        "MSE": 59.910739823433346,
+        "RMSE": 7.740202828313567,
+        "Prediction_Time": 0.6921544075012207
+      },
+      "timestamp": "2025-10-25T05:47:48.105338Z",
+      "submission_count": 7
+    },
+    {
+      "student_info": {
+        "student_id": "51285903009",
+        "name": "杨帆",
+        "nickname": "俺真不中嘞"
+      },
+      "score": 7.7448,
+      "metrics": {
+        "MAE": 6.291270068447481,
+        "MSE": 59.98225500570354,
+        "RMSE": 7.744821173255296,
+        "Prediction_Time": 35.872873067855835
+      },
+      "timestamp": "2025-10-25T09:08:29.302753Z",
+      "submission_count": 4
+    },
+    {
+      "student_info": {
+        "student_id": "51285903136",
+        "name": "朱文韬",
+        "nickname": "柔漠"
+      },
+      "score": 7.7448,
+      "metrics": {
+        "MAE": 6.2912875323599,
+        "MSE": 59.98198706056271,
+        "RMSE": 7.744803874893328,
+        "Prediction_Time": 124.97228193283081
+      },
+      "timestamp": "2025-10-24T06:16:29.464126Z",
+      "submission_count": 1
+    },
+    {
+      "student_info": {
+        "student_id": "51285903130",
+        "name": "莫易新",
+        "nickname": "Mo1s"
+      },
+      "score": 7.7448,
+      "metrics": {
+        "MAE": 6.291235015852789,
+        "MSE": 59.981703798271155,
+        "RMSE": 7.744785587624176,
+        "Prediction_Time": 209.9700014591217
+      },
+      "timestamp": "2025-10-25T16:23:06.332170Z",
+      "submission_count": 3
+    },
+    {
+      "student_info": {
+        "student_id": "51285903118",
+        "name": "刘飞扬",
+        "nickname": "dingzhen"
+      },
+      "score": 7.7449,
+      "metrics": {
+        "MAE": 6.286169539549474,
+        "MSE": 59.98356674537226,
+        "RMSE": 7.744905857747546,
+        "Prediction_Time": 0.1701350212097168
+      },
+      "timestamp": "2025-10-24T09:39:17.938910Z",
+      "submission_count": 8
+    },
+    {
+      "student_info": {
+        "student_id": "51285903137",
+        "name": "李涵一",
+        "nickname": "neo"
+      },
+      "score": 7.7449,
+      "metrics": {
+        "MAE": 6.2912495606308845,
+        "MSE": 59.98382147439835,
+        "RMSE": 7.744922302670205,
+        "Prediction_Time": 129.81012296676636
+      },
+      "timestamp": "2025-10-25T03:21:31.100094Z",
+      "submission_count": 4
+    },
+    {
+      "student_info": {
+        "student_id": "51285903126",
+        "name": "韩弈文",
+        "nickname": "我的昵称"
+      },
+      "score": 7.8129,
+      "metrics": {
+        "MAE": 6.344920687538763,
+        "MSE": 61.04168962084445,
+        "RMSE": 7.812918124545044,
+        "Prediction_Time": 33.5303418636322
+      },
+      "timestamp": "2025-10-25T15:41:28.949748Z",
+      "submission_count": 6
+    },
+    {
+      "student_info": {
+        "student_id": "51285903060",
+        "name": "韩威如",
+        "nickname": "hi"
+      },
+      "score": 7.8204,
+      "metrics": {
+        "MAE": 6.345468675055038,
+        "MSE": 61.15916616408618,
+        "RMSE": 7.820432607221047,
+        "Prediction_Time": 69.39141654968262
+      },
+      "timestamp": "2025-10-24T02:49:38.641869Z",
+      "submission_count": 1
+    },
+    {
+      "student_info": {
+        "student_id": "51285903018",
+        "name": "陆锦云",
+        "nickname": "jixingtian"
+      },
+      "score": 7.8671,
+      "metrics": {
+        "MAE": 6.388281777484098,
+        "MSE": 61.89204223865391,
+        "RMSE": 7.867149562494278,
+        "Prediction_Time": 92.56221652030945
+      },
+      "timestamp": "2025-10-24T07:36:20.040509Z",
+      "submission_count": 7
+    },
+    {
+      "student_info": {
+        "student_id": "51285903080",
+        "name": "朱宇瑄",
+        "nickname": "哈吉米"
+      },
+      "score": 7.9732,
+      "metrics": {
+        "MAE": 6.479549012883431,
+        "MSE": 63.57212298296211,
+        "RMSE": 7.973212839436942,
+        "Prediction_Time": 22.636704444885254
+      },
+      "timestamp": "2025-10-23T13:36:09.084004Z",
+      "submission_count": 2
+    },
+    {
+      "student_info": {
+        "student_id": "51285903013",
+        "name": "虞锴宸",
+        "nickname": "ykc"
+      },
+      "score": 8.012,
+      "metrics": {
+        "MAE": 6.499744694105149,
+        "MSE": 64.19162754709807,
+        "RMSE": 8.011967769973745,
+        "Prediction_Time": 48.290757179260254
+      },
+      "timestamp": "2025-10-24T16:00:40.092605Z",
+      "submission_count": 4
+    },
+    {
+      "student_info": {
+        "student_id": "51285903055",
+        "name": "Zhangjingbin",
+        "nickname": "babyblue"
+      },
+      "score": 8.1026,
+      "metrics": {
+        "MAE": 6.6901954465074684,
+        "MSE": 65.65221335260777,
+        "RMSE": 8.10260534350574,
+        "Prediction_Time": 13.283330917358398
+      },
+      "timestamp": "2025-10-25T09:22:53.337052Z",
+      "submission_count": 1
+    },
+    {
+      "student_info": {
+        "student_id": "51285903036",
+        "name": "周彩纯",
+        "nickname": "miaomiao"
+      },
+      "score": 8.1455,
+      "metrics": {
+        "MAE": 6.6429059634107475,
+        "MSE": 66.34901270099873,
+        "RMSE": 8.145490329071585,
+        "Prediction_Time": 11.681757688522339
+      },
+      "timestamp": "2025-10-25T08:41:31.445132Z",
+      "submission_count": 5
+    },
+    {
+      "student_info": {
+        "student_id": "51285903011",
+        "name": "余富康",
+        "nickname": "suzy327"
+      },
+      "score": 8.4048,
+      "metrics": {
+        "MAE": 6.765384972402235,
+        "MSE": 70.64023065607584,
+        "RMSE": 8.404774277520833,
+        "Prediction_Time": 334.9286279678345
+      },
+      "timestamp": "2025-10-24T12:06:07.258586Z",
+      "submission_count": 3
+    },
+    {
+      "student_info": {
+        "student_id": "51285903056",
+        "name": "王诗雨",
+        "nickname": "w"
+      },
+      "score": 8.42,
+      "metrics": {
+        "MAE": 6.861819124870245,
+        "MSE": 70.89609734005491,
+        "RMSE": 8.419982027299994,
+        "Prediction_Time": 51.69137477874756
+      },
+      "timestamp": "2025-10-23T16:01:49.961252Z",
+      "submission_count": 1
+    },
+    {
+      "student_info": {
+        "student_id": "51285903081",
+        "name": "周孙睿",
+        "nickname": "233"
+      },
+      "score": 8.5073,
+      "metrics": {
+        "MAE": 6.9186517854583425,
+        "MSE": 72.37418998920762,
+        "RMSE": 8.507302156924228,
+        "Prediction_Time": 211.52556490898132
+      },
+      "timestamp": "2025-10-23T13:11:04.832084Z",
+      "submission_count": 1
+    },
+    {
+      "student_info": {
+        "student_id": "51285903032",
+        "name": "王瑞彬",
+        "nickname": "KKK"
+      },
+      "score": 8.6032,
+      "metrics": {
+        "MAE": 6.888883269319993,
+        "MSE": 74.01430036196878,
+        "RMSE": 8.603156418545973,
+        "Prediction_Time": 56.84157943725586
+      },
+      "timestamp": "2025-10-25T06:43:37.727133Z",
+      "submission_count": 4
+    },
+    {
+      "student_info": {
+        "student_id": "51285903127",
+        "name": "吴郁涵",
+        "nickname": "黄焖鸡"
+      },
+      "score": 8.6158,
+      "metrics": {
+        "MAE": 7.046856079593287,
+        "MSE": 74.23173817574671,
+        "RMSE": 8.615784246123315,
+        "Prediction_Time": 43.65321493148804
+      },
+      "timestamp": "2025-10-23T15:31:28.307241Z",
+      "submission_count": 5
+    },
+    {
+      "student_info": {
+        "student_id": "51285903006",
+        "name": "李嘉诚",
+        "nickname": "icej"
+      },
+      "score": 8.806,
+      "metrics": {
+        "MAE": 7.257457435956059,
+        "MSE": 77.5463273505797,
+        "RMSE": 8.806039254431,
+        "Prediction_Time": 139.0273561477661
+      },
+      "timestamp": "2025-10-24T17:10:30.910454Z",
+      "submission_count": 6
+    },
+    {
+      "student_info": {
+        "student_id": "51285903103",
+        "name": "祁佳馨",
+        "nickname": "xxll"
+      },
+      "score": 8.8425,
+      "metrics": {
+        "MAE": 7.149133358415426,
+        "MSE": 78.1903287515089,
+        "RMSE": 8.84252954484795,
+        "Prediction_Time": 42.69483542442322
+      },
+      "timestamp": "2025-10-25T06:37:07.606402Z",
+      "submission_count": 2
+    },
+    {
+      "student_info": {
+        "student_id": "51285903002",
+        "name": "孙佳杰",
+        "nickname": "湖人总冠军"
+      },
+      "score": 8.8642,
+      "metrics": {
+        "MAE": 7.169255567452121,
+        "MSE": 78.57432725998596,
+        "RMSE": 8.864216110857518,
+        "Prediction_Time": 40.52573561668396
+      },
+      "timestamp": "2025-10-25T14:15:52.403804Z",
+      "submission_count": 9
+    },
+    {
+      "student_info": {
+        "student_id": "51285903068",
+        "name": "张宥",
+        "nickname": "uu"
+      },
+      "score": 9.1582,
+      "metrics": {
+        "MAE": 7.584201645620323,
+        "MSE": 83.87249106793497,
+        "RMSE": 9.158192565563086,
+        "Prediction_Time": 5.712310791015625
+      },
+      "timestamp": "2025-10-24T08:22:08.679985Z",
+      "submission_count": 3
+    },
+    {
+      "student_info": {
+        "student_id": "51285903047",
+        "name": "赵欣雨",
+        "nickname": "dj"
+      },
+      "score": 9.1987,
+      "metrics": {
+        "MAE": 7.268815444541659,
+        "MSE": 84.61629161497191,
+        "RMSE": 9.198711410571152,
+        "Prediction_Time": 23.659353733062744
+      },
+      "timestamp": "2025-10-25T06:42:40.486877Z",
+      "submission_count": 5
+    },
+    {
+      "student_info": {
+        "student_id": "51285903116",
+        "name": "s",
+        "nickname": "ss"
+      },
+      "score": 9.4569,
+      "metrics": {
+        "MAE": 7.871334616795964,
+        "MSE": 89.43337430699242,
+        "RMSE": 9.456922031347855,
+        "Prediction_Time": 38.43777561187744
+      },
+      "timestamp": "2025-10-24T08:10:01.643801Z",
+      "submission_count": 15
+    },
+    {
+      "student_info": {
+        "student_id": "131651",
+        "name": "tiancai",
+        "nickname": "5646465"
+      },
+      "score": 9.457,
+      "metrics": {
+        "MAE": 7.8714199518039445,
+        "MSE": 89.435101988034,
+        "RMSE": 9.457013375692878,
+        "Prediction_Time": 56.468188762664795
+      },
+      "timestamp": "2025-10-25T19:10:18.465375Z",
+      "submission_count": 4
+    },
+    {
+      "student_info": {
+        "student_id": "51285903069",
+        "name": "夏培玮",
+        "nickname": "MAIPower"
+      },
+      "score": 9.4575,
+      "metrics": {
+        "MAE": 7.873334806054874,
+        "MSE": 89.44445810522417,
+        "RMSE": 9.457508028292875,
+        "Prediction_Time": 22.490960597991943
+      },
+      "timestamp": "2025-10-24T12:47:56.269622Z",
+      "submission_count": 2
+    },
+    {
+      "student_info": {
+        "student_id": "51285903022",
+        "name": "徐治平",
+        "nickname": "FWUNAI"
+      },
+      "score": 9.4602,
+      "metrics": {
+        "MAE": 7.876891990047172,
+        "MSE": 89.49606474970896,
+        "RMSE": 9.460235977485391,
+        "Prediction_Time": 73.84619188308716
+      },
+      "timestamp": "2025-10-23T16:37:33.174479Z",
+      "submission_count": 4
+    },
+    {
+      "student_info": {
+        "student_id": "51285903043",
+        "name": "zxy",
+        "nickname": "zzzzz"
+      },
+      "score": 9.687,
+      "metrics": {
+        "MAE": 8.091971312924297,
+        "MSE": 93.8386265587507,
+        "RMSE": 9.687033940208464,
+        "Prediction_Time": 0.5346331596374512
+      },
+      "timestamp": "2025-10-24T06:55:30.005540Z",
+      "submission_count": 9
+    },
+    {
+      "student_info": {
+        "student_id": "51285903059",
+        "name": "李怡萱",
+        "nickname": "mi"
+      },
+      "score": 10.0171,
+      "metrics": {
+        "MAE": 7.992221779749704,
+        "MSE": 100.34222620806098,
+        "RMSE": 10.017096695553107,
+        "Prediction_Time": 53.24055099487305
+      },
+      "timestamp": "2025-10-23T15:34:17.326406Z",
+      "submission_count": 5
+    },
+    {
+      "student_info": {
+        "student_id": "51285903106",
+        "name": "余俊",
+        "nickname": "余俊"
+      },
+      "score": 10.0465,
+      "metrics": {
+        "MAE": 8.368378087886033,
+        "MSE": 100.93214999148478,
+        "RMSE": 10.046499389911133,
+        "Prediction_Time": 76.40646314620972
+      },
+      "timestamp": "2025-10-25T16:38:54.134722Z",
+      "submission_count": 8
+    },
+    {
+      "student_info": {
+        "student_id": "52295903006",
+        "name": "xxb",
+        "nickname": "kute"
+      },
+      "score": 10.0468,
+      "metrics": {
+        "MAE": 8.370171554528543,
+        "MSE": 100.937603485102,
+        "RMSE": 10.046770798873736,
+        "Prediction_Time": 21.48210883140564
+      },
+      "timestamp": "2025-10-24T11:58:09.730666Z",
+      "submission_count": 11
+    },
+    {
+      "student_info": {
+        "student_id": "51285903073",
+        "name": "刘烨铭",
+        "nickname": "Ciallo～(∠・ω< )⌒★"
+      },
+      "score": 10.0702,
+      "metrics": {
+        "MAE": 8.385799450727308,
+        "MSE": 101.40825677621251,
+        "RMSE": 10.070166670726582,
+        "Prediction_Time": 18.405542850494385
+      },
+      "timestamp": "2025-10-25T10:34:34.354973Z",
+      "submission_count": 7
+    },
+    {
+      "student_info": {
+        "student_id": "51285903115",
+        "name": "俞言骐",
+        "nickname": "yyqjwyy"
+      },
+      "score": 10.0707,
+      "metrics": {
+        "MAE": 8.383333904658619,
+        "MSE": 101.41964150162968,
+        "RMSE": 10.070731924822033,
+        "Prediction_Time": 109.28633427619934
+      },
+      "timestamp": "2025-10-24T03:03:14.990736Z",
+      "submission_count": 2
+    },
+    {
+      "student_info": {
+        "student_id": "51285903100",
+        "name": "gxh",
+        "nickname": "WeiMeng"
+      },
+      "score": 10.1282,
+      "metrics": {
+        "MAE": 8.321,
+        "MSE": 102.581,
+        "RMSE": 10.128227880532705,
+        "Prediction_Time": 12.948249578475952
+      },
+      "timestamp": "2025-10-25T05:30:36.596652Z",
+      "submission_count": 31
+    },
+    {
+      "student_info": {
+        "student_id": "5128593049",
+        "name": "蔡钦楠",
+        "nickname": "YI"
+      },
+      "score": 11.0334,
+      "metrics": {
+        "MAE": 8.440307261727769,
+        "MSE": 121.73514912308357,
+        "RMSE": 11.033365267364422,
+        "Prediction_Time": 36.50836110115051
+      },
+      "timestamp": "2025-10-24T01:58:19.716193Z",
+      "submission_count": 5
+    },
+    {
+      "student_info": {
+        "student_id": "1001",
+        "name": "你的姓名",
+        "nickname": "测试昵称"
+      },
+      "score": 25.1917,
+      "metrics": {
+        "MAE": 23.0918,
+        "MSE": 634.6202,
+        "RMSE": 25.191669257911432,
+        "Prediction_Time": 0.28245115280151367
+      },
+      "timestamp": "2025-10-24T02:32:29.763050Z",
+      "submission_count": 2
+    },
+    {
+      "student_info": {
+        "student_id": "1",
+        "name": "test",
+        "nickname": "test"
+      },
+      "score": 46.9144,
+      "metrics": {
+        "MAE": 45.21264565568818,
+        "MSE": 2200.9655583971607,
+        "RMSE": 46.914449356218185,
+        "Prediction_Time": 15.199379205703735
+      },
+      "timestamp": "2025-10-24T11:33:36.003883Z",
+      "submission_count": 1
+    },
+    {
+      "student_info": {
+        "student_id": "51285903072",
+        "name": "张笑铖",
+        "nickname": "joy_Q"
+      },
+      "score": 46.9144,
+      "metrics": {
+        "MAE": 45.21264565568818,
+        "MSE": 2200.9655583971607,
+        "RMSE": 46.914449356218185,
+        "Prediction_Time": 16.402353048324585
+      },
+      "timestamp": "2025-10-23T15:35:43.413038Z",
+      "submission_count": 1
+    },
+    {
+      "student_info": {
+        "student_id": "51285903097",
+        "name": "梁娜",
+        "nickname": "CPU运行要散热"
+      },
+      "score": 46.9144,
+      "metrics": {
+        "MAE": 45.21264565568818,
+        "MSE": 2200.9655583971607,
+        "RMSE": 46.914449356218185,
+        "Prediction_Time": 17.65700101852417
+      },
+      "timestamp": "2025-10-24T12:55:38.235160Z",
+      "submission_count": 4
+    },
+    {
+      "student_info": {
+        "student_id": "51285903082",
+        "name": "姚佳怡",
+        "nickname": "yjy123"
+      },
+      "score": 46.9144,
+      "metrics": {
+        "MAE": 45.21264565568818,
+        "MSE": 2200.9655583971607,
+        "RMSE": 46.914449356218185,
+        "Prediction_Time": 22.540865182876587
+      },
+      "timestamp": "2025-10-25T15:52:47.336163Z",
+      "submission_count": 4
+    },
+    {
+      "student_info": {
+        "student_id": "51285903016",
+        "name": "陈婧",
+        "nickname": "through"
+      },
+      "score": 46.9144,
+      "metrics": {
+        "MAE": 45.21264565568818,
+        "MSE": 2200.9655583971607,
+        "RMSE": 46.914449356218185,
+        "Prediction_Time": 36.67275953292847
+      },
+      "timestamp": "2025-10-25T12:53:33.052848Z",
+      "submission_count": 4
+    },
+    {
+      "student_info": {
+        "student_id": "51285903124",
+        "name": "WangXilei",
+        "nickname": "little_lei"
+      },
+      "score": 46.9144,
+      "metrics": {
+        "MAE": 45.21264565568818,
+        "MSE": 2200.9655583971607,
+        "RMSE": 46.914449356218185,
+        "Prediction_Time": 67.4871826171875
+      },
+      "timestamp": "2025-10-25T15:26:52.047252Z",
+      "submission_count": 1
+    }
+  ]
+}

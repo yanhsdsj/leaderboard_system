@@ -1,0 +1,282 @@
+[
+  {
+    "student_info": {
+      "student_id": "logic_test_101",
+      "name": "学生A",
+      "nickname": "第一名"
+    },
+    "score": 0.97,
+    "metrics": {
+      "Accuracy": 0.97,
+      "Prediction_Time": 0.06
+    },
+    "timestamp": "2025-11-03T12:53:36.232297Z",
+    "submission_count": 9
+  },
+  {
+    "student_info": {
+      "student_id": "update_test_301",
+      "name": "保持记录",
+      "nickname": "最佳保持者"
+    },
+    "score": 0.96,
+    "metrics": {
+      "Accuracy": 0.96,
+      "Prediction_Time": 0.04
+    },
+    "timestamp": "2025-11-03T12:52:26.687064Z",
+    "submission_count": 4
+  },
+  {
+    "student_info": {
+      "student_id": "20230104",
+      "name": "孙八",
+      "nickname": "小孙"
+    },
+    "score": 0.95,
+    "metrics": {
+      "Accuracy": 0.95,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:52.947449Z",
+    "submission_count": 3
+  },
+  {
+    "student_info": {
+      "student_id": "logic_test_001",
+      "name": "测试学生1",
+      "nickname": "波动哥"
+    },
+    "score": 0.95,
+    "metrics": {
+      "Accuracy": 0.95,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:53:27.750380Z",
+    "submission_count": 21
+  },
+  {
+    "student_info": {
+      "student_id": "logic_test_102",
+      "name": "学生B",
+      "nickname": "第二名"
+    },
+    "score": 0.95,
+    "metrics": {
+      "Accuracy": 0.95,
+      "Prediction_Time": 0.07
+    },
+    "timestamp": "2025-11-03T12:53:38.349980Z",
+    "submission_count": 7
+  },
+  {
+    "student_info": {
+      "student_id": "logic_test_104",
+      "name": "学生D",
+      "nickname": "第四名"
+    },
+    "score": 0.94,
+    "metrics": {
+      "Accuracy": 0.94,
+      "Prediction_Time": 0.08
+    },
+    "timestamp": "2025-11-03T12:52:05.132292Z",
+    "submission_count": 6
+  },
+  {
+    "student_info": {
+      "student_id": "logic_test_103",
+      "name": "学生C",
+      "nickname": "第三名"
+    },
+    "score": 0.94,
+    "metrics": {
+      "Accuracy": 0.94,
+      "Prediction_Time": 0.1
+    },
+    "timestamp": "2025-11-03T12:51:58.773239Z",
+    "submission_count": 6
+  },
+  {
+    "student_info": {
+      "student_id": "logic_test_105",
+      "name": "学生E",
+      "nickname": "第五名"
+    },
+    "score": 0.93,
+    "metrics": {
+      "Accuracy": 0.93,
+      "Prediction_Time": 0.06
+    },
+    "timestamp": "2025-11-03T12:52:11.640997Z",
+    "submission_count": 6
+  },
+  {
+    "student_info": {
+      "student_id": "20230203",
+      "name": "郑十一",
+      "nickname": "郑郑"
+    },
+    "score": 0.91,
+    "metrics": {
+      "Accuracy": 0.91,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:59.175871Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "20230202",
+      "name": "吴十",
+      "nickname": "小吴"
+    },
+    "score": 0.89,
+    "metrics": {
+      "Accuracy": 0.89,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:57.105272Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "tie_test_201",
+      "name": "并列A",
+      "nickname": "最快"
+    },
+    "score": 0.88,
+    "metrics": {
+      "Accuracy": 0.88,
+      "Prediction_Time": 0.03
+    },
+    "timestamp": "2025-11-03T12:52:15.837011Z",
+    "submission_count": 2
+  },
+  {
+    "student_info": {
+      "student_id": "20230102",
+      "name": "王五",
+      "nickname": "小王"
+    },
+    "score": 0.88,
+    "metrics": {
+      "Accuracy": 0.88,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:40.493621Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "20230303",
+      "name": "王芳",
+      "nickname": "王芳😊"
+    },
+    "score": 0.88,
+    "metrics": {
+      "Accuracy": 0.88,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:46:05.420454Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "tie_test_202",
+      "name": "并列B",
+      "nickname": "中等"
+    },
+    "score": 0.88,
+    "metrics": {
+      "Accuracy": 0.88,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:52:17.945617Z",
+    "submission_count": 2
+  },
+  {
+    "student_info": {
+      "student_id": "tie_test_203",
+      "name": "并列C",
+      "nickname": "最慢"
+    },
+    "score": 0.88,
+    "metrics": {
+      "Accuracy": 0.88,
+      "Prediction_Time": 0.08
+    },
+    "timestamp": "2025-11-03T12:52:20.088041Z",
+    "submission_count": 2
+  },
+  {
+    "student_info": {
+      "student_id": "20230103",
+      "name": "赵六",
+      "nickname": "小赵"
+    },
+    "score": 0.87,
+    "metrics": {
+      "Accuracy": 0.87,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:44.648856Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "20230302",
+      "name": "李明·张",
+      "nickname": "小李"
+    },
+    "score": 0.87,
+    "metrics": {
+      "Accuracy": 0.87,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:46:03.331572Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "20230201",
+      "name": "周九",
+      "nickname": "阿九"
+    },
+    "score": 0.86,
+    "metrics": {
+      "Accuracy": 0.86,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:55.032769Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "20230301",
+      "name": "欧阳修",
+      "nickname": "欧欧"
+    },
+    "score": 0.86,
+    "metrics": {
+      "Accuracy": 0.86,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:46:01.255606Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "20230101",
+      "name": "张三",
+      "nickname": "小张"
+    },
+    "score": 0.85,
+    "metrics": {
+      "Accuracy": 0.85,
+      "Prediction_Time": 0.05
+    },
+    "timestamp": "2025-11-03T12:45:36.356765Z",
+    "submission_count": 1
+  }
+]

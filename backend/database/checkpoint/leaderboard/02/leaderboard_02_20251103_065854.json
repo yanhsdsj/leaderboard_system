@@ -1,0 +1,30 @@
+[
+  {
+    "student_info": {
+      "student_id": "test_correct",
+      "name": "正常学生",
+      "nickname": "正常昵称"
+    },
+    "score": 0.92,
+    "metrics": {
+      "Accuracy": 0.92,
+      "Prediction_Time": 0.04
+    },
+    "timestamp": "2025-11-03T06:57:26.590409Z",
+    "submission_count": 1
+  },
+  {
+    "student_info": {
+      "student_id": "test_nickname_bind",
+      "name": "测试绑定",
+      "nickname": "原始昵称"
+    },
+    "score": 0.85,
+    "metrics": {
+      "Accuracy": 0.85,
+      "Prediction_Time": 0.06
+    },
+    "timestamp": "2025-11-03T06:57:22.454354Z",
+    "submission_count": 1
+  }
+]

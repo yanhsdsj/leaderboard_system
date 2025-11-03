@@ -1,5 +1,5 @@
-from pydantic import BaseModel, Field, ConfigDict
-from typing import Dict, Optional, Any
+from pydantic import BaseModel, Field, ConfigDict, field_validator
+from typing import Dict, Optional, Any, Literal
 from datetime import datetime
 from .student import StudentInfo
 
@@ -47,10 +47,9 @@ class Metrics(BaseModel):
         return self.model_dump(**kwargs)
 
 
-class SubmittedFiles(BaseModel):
-    """提交的文件内容（可选）"""
-    solution_py: Optional[str] = Field(None, description="solution.py文件内容（UTF-8文本）")
-    model_file: Optional[str] = Field(None, description="模型文件内容（Base64编码）")
+# 直接使用Dict类型，不需要单独的SubmittedFiles类
+# 文件内容格式: Dict[filename, base64_content]
+# 例如: {"solution.py": "base64编码", "model.py": "base64编码"}
 
 
 class SubmissionRequest(BaseModel):
@@ -59,7 +58,8 @@ class SubmissionRequest(BaseModel):
     assignment_id: str = Field(..., description="作业编号")
     metrics: Metrics = Field(..., description="评估指标")
     checksums: Dict[str, str] = Field(..., description="文件MD5校验和")
-    files: Optional[SubmittedFiles] = Field(None, description="提交的文件内容（可选）")
+    files: Optional[Dict[str, str]] = Field(None, description="提交的文件内容（可选），格式: {filename: base64_content}")
+    main_contributor: Literal["human", "ai"] = Field(..., description="作业主要贡献者：human 或 ai")
 
 
 class CompleteSubmissionData(BaseModel):
@@ -68,7 +68,8 @@ class CompleteSubmissionData(BaseModel):
     timestamp: str = Field(..., description="ISO格式时间戳")
     submission_count: int = Field(..., description="提交次数")
     checksums: Optional[Dict[str, str]] = Field(None, description="文件MD5校验和")
-    files: Optional[SubmittedFiles] = Field(None, description="提交的文件内容")
+    files: Optional[Dict[str, str]] = Field(None, description="提交的文件内容，格式: {filename: base64_content}")
+    main_contributor: str = Field(..., description="作业主要贡献者：human 或 ai")
 
 
 class CompleteSubmission(BaseModel):
